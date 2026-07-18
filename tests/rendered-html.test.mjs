@@ -191,13 +191,14 @@ test("server-renders dedicated blog, links, and reserved academic index pages", 
 });
 
 test("ships static GitHub Pages output, discovery files, and no private CV copies", async () => {
-  const [component, page, layout, css, nextConfig, workflow, robots, sitemap] =
+  const [component, page, layout, css, nextConfig, viteConfig, workflow, robots, sitemap] =
     await Promise.all([
       readFile(new URL("../app/components/AcademicSite.tsx", import.meta.url), "utf8"),
       readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
       readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
+      readFile(new URL("../vite.config.ts", import.meta.url), "utf8"),
       readFile(new URL("../.github/workflows/pages.yml", import.meta.url), "utf8"),
       readFile(new URL("../public/robots.txt", import.meta.url), "utf8"),
       readFile(new URL("../public/sitemap.xml", import.meta.url), "utf8"),
@@ -243,6 +244,8 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   assert.doesNotMatch(css, /linear-gradient|box-shadow|backdrop-filter/);
   assert.match(nextConfig, /output: "export"/);
   assert.match(nextConfig, /trailingSlash: true/);
+  assert.match(viteConfig, /existsSync\(hostingConfigUrl\)/);
+  assert.doesNotMatch(viteConfig, /import hostingConfig from/);
   assert.match(workflow, /actions\/deploy-pages@v4/);
   assert.match(workflow, /path: dist\/client/);
   assert.match(robots, /Sitemap: https:\/\/yhyfhgs\.github\.io\/sitemap\.xml/);

@@ -620,7 +620,11 @@ export default function AcademicSite({ page }: { page: PageKey }) {
         </nav>
 
         <div className="preference-controls">
-          <div className="text-control" aria-label={content.controls.language}>
+          <div
+            className="text-control"
+            role="group"
+            aria-label={content.controls.language}
+          >
             <button
               type="button"
               aria-pressed={language === "en"}
@@ -637,7 +641,11 @@ export default function AcademicSite({ page }: { page: PageKey }) {
               中文
             </button>
           </div>
-          <div className="text-control" aria-label={content.controls.appearance}>
+          <div
+            className="text-control"
+            role="group"
+            aria-label={content.controls.appearance}
+          >
             <button
               type="button"
               aria-pressed={theme === "light"}
