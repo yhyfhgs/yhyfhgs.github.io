@@ -3,8 +3,9 @@ import AcademicSite from "../components/AcademicSite";
 
 export const metadata: Metadata = {
   title: "Links · Haoyang Ye",
-  description: "Links for Haoyang Ye.",
+  description: "Friend links for Haoyang Ye.",
   alternates: { canonical: "/links/" },
+  robots: { index: false, follow: true },
 };
 
 export default function Links() {

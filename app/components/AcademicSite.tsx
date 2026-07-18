@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaGithub } from "react-icons/fa";
+import { MdOutlineEmail } from "react-icons/md";
+import { SiOrcid, SiX } from "react-icons/si";
 
 type Language = "en" | "zh";
 type Theme = "light" | "dark";
@@ -43,6 +46,8 @@ const copy = {
         "Research Interests: Reinforcement Learning, LLM post training and Agentic RL",
       email: "Email",
       github: "GitHub",
+      orcid: "ORCID",
+      x: "X",
     },
     shared: {
       allPublications: "All publications",
@@ -258,12 +263,6 @@ const copy = {
     },
     links: {
       title: "Links",
-      github: "GitHub",
-      email: "Email",
-      orcid: "ORCID",
-      x: "X",
-      university: "Peking University",
-      academic: "Academic Index",
     },
     academic: {
       title: "Academic Index",
@@ -290,7 +289,7 @@ const copy = {
       research: "科研",
       publications: "发表论文",
       blog: "博客",
-      links: "链接",
+      links: "友链",
     },
     controls: {
       language: "语言",
@@ -305,6 +304,8 @@ const copy = {
         "研究方向：Reinforcement Learning, LLM post training and Agentic RL",
       email: "邮箱",
       github: "GitHub",
+      orcid: "ORCID",
+      x: "X",
     },
     shared: {
       allPublications: "全部论文",
@@ -518,13 +519,7 @@ const copy = {
       status: "暂无文章。",
     },
     links: {
-      title: "链接",
-      github: "GitHub",
-      email: "邮箱",
-      orcid: "ORCID",
-      x: "X",
-      university: "北京大学",
-      academic: "学术索引",
+      title: "友链",
     },
     academic: {
       title: "学术索引",
@@ -700,9 +695,39 @@ function HomePage({ content }: { content: SiteContent }) {
           <h1>{content.hero.name}</h1>
           <p className="hero-description">{content.hero.description}</p>
           <div className="contact-row">
-            <a href={"mailto:" + EMAIL}>{content.hero.email} ↗</a>
-            <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-              {content.hero.github} ↗
+            <a className="contact-link" data-contact="email" href={"mailto:" + EMAIL}>
+              <MdOutlineEmail aria-hidden="true" focusable="false" />
+              <span>{content.hero.email}</span>
+            </a>
+            <a
+              className="contact-link"
+              data-contact="github"
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaGithub aria-hidden="true" focusable="false" />
+              <span>{content.hero.github}</span>
+            </a>
+            <a
+              className="contact-link"
+              data-contact="orcid"
+              href={ORCID_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <SiOrcid aria-hidden="true" focusable="false" />
+              <span>{content.hero.orcid}</span>
+            </a>
+            <a
+              className="contact-link"
+              data-contact="x"
+              href={X_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <SiX aria-hidden="true" focusable="false" />
+              <span>{content.hero.x}</span>
             </a>
           </div>
         </div>
@@ -802,8 +827,12 @@ function HomePage({ content }: { content: SiteContent }) {
       <section className="home-section home-endmatter" id="links-preview">
         <SectionLabel title={content.links.title} />
         <div className="section-body">
-          <Link className="preview-row" href="/links">
-            <span>GitHub · ORCID · X · {content.links.email}</span>
+          <Link
+            className="preview-row preview-row-empty"
+            href="/links"
+            aria-label={`${content.links.title}: ${content.shared.openPage}`}
+          >
+            <span aria-hidden="true" />
             <em>{content.shared.openPage} →</em>
           </Link>
         </div>
@@ -952,61 +981,10 @@ function BlogPage({ content }: { content: SiteContent }) {
 }
 
 function LinksPage({ content }: { content: SiteContent }) {
-  const links = [
-    {
-      label: content.links.github,
-      value: "@yhyfhgs",
-      href: GITHUB_URL,
-      external: true,
-    },
-    {
-      label: content.links.orcid,
-      value: "0009-0009-3215-2811",
-      href: ORCID_URL,
-      external: true,
-    },
-    {
-      label: content.links.x,
-      value: "@2FH5GS",
-      href: X_URL,
-      external: true,
-    },
-    {
-      label: content.links.email,
-      value: EMAIL,
-      href: "mailto:" + EMAIL,
-      external: false,
-    },
-    {
-      label: content.links.university,
-      value: "pku.edu.cn",
-      href: "https://www.pku.edu.cn/",
-      external: true,
-    },
-  ];
-
   return (
     <div id="top" className="subpage narrow-page">
       <PageHeader title={content.links.title} />
-      <div className="link-directory">
-        {links.map((link) => (
-          <a
-            href={link.href}
-            key={link.label}
-            target={link.external ? "_blank" : undefined}
-            rel={link.external ? "noreferrer" : undefined}
-          >
-            <span>{link.label}</span>
-            <strong>{link.value}</strong>
-            <b aria-hidden="true">↗</b>
-          </a>
-        ))}
-        <Link href="/academic">
-          <span>{content.links.academic}</span>
-          <strong>{content.links.academic}</strong>
-          <b aria-hidden="true">→</b>
-        </Link>
-      </div>
+      <div className="friend-links-slot" data-state="empty" aria-hidden="true" />
     </div>
   );
 }

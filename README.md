@@ -10,8 +10,8 @@ The GitHub Pages site is the canonical public version.
 
 - Research experience, education, honors, and source-backed profile details
 - Publication index and individual publication pages with official metadata
-- Existing GitHub, ORCID, X, email, and Peking University links
-- Separate Blog, Links, and Academic Index pages
+- Homepage contact links for email, GitHub, ORCID, and X
+- Separate Blog, empty friend-links, and Academic Index pages
 - English/Chinese and light/dark controls
 - Reserved News, Talks, Teaching, Projects & Software, Service, and CV areas
 

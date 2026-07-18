@@ -62,6 +62,12 @@ function sectionById(html, id) {
   return match[0];
 }
 
+function mainContent(html) {
+  const match = html.match(/<main[^>]*>[\s\S]*?<\/main>/);
+  assert.ok(match, "Expected a main element");
+  return match[0];
+}
+
 test("server-renders the restrained homepage with only source-backed profile content", async () => {
   const html = await renderHtml("/");
 
@@ -77,8 +83,18 @@ test("server-renders the restrained homepage with only source-backed profile con
   assert.match(html, /href="\/links"/);
   assert.match(html, /aria-pressed="true"/);
   assert.match(html, /https:\/\/github\.com\/yhyfhgs/);
+  assert.match(html, /https:\/\/orcid\.org\/0009-0009-3215-2811/);
+  assert.match(html, /https:\/\/x\.com\/2FH5GS/);
+  assert.match(html, /mailto:2501112105@stu\.pku\.edu\.cn/);
   assert.doesNotMatch(html, /ZyphingFHGS/);
   assert.doesNotMatch(html, /Internship|实习/i);
+
+  const contactRow = html.match(/<div class="contact-row">[\s\S]*?<\/div>/)?.[0];
+  assert.ok(contactRow, "Expected the homepage contact row");
+  for (const contact of ["email", "github", "orcid", "x"]) {
+    assert.match(contactRow, new RegExp(`data-contact="${contact}"`));
+  }
+  assert.equal((contactRow.match(/<svg/g) ?? []).length, 4);
 
   const optimal = articleContaining(
     html,
@@ -110,8 +126,9 @@ test("server-renders the restrained homepage with only source-backed profile con
 
   const linksSection = sectionById(html, "links-preview");
   assert.match(linksSection, />Links</);
-  assert.match(linksSection, /GitHub · ORCID · X/);
   assert.match(linksSection, /href="\/links"/);
+  assert.match(linksSection, /class="preview-row preview-row-empty"/);
+  assert.doesNotMatch(linksSection, /GitHub|ORCID|@2FH5GS|2501112105/);
   assert.doesNotMatch(linksSection, /href="\/blog"/);
 });
 
@@ -163,7 +180,7 @@ test("server-renders complete official metadata on both publication detail pages
   assert.match(icsap, /link\.springer\.com\/chapter\/10\.1007\/978-3-032-00800-8_33/);
 });
 
-test("server-renders dedicated blog, links, and reserved academic index pages", async () => {
+test("server-renders dedicated blog, empty friend-links, and reserved academic index pages", async () => {
   const blog = await renderHtml("/blog");
   assert.match(blog, /<title>Blog · Haoyang Ye<\/title>/i);
   assert.match(blog, /No posts yet\./);
@@ -171,12 +188,10 @@ test("server-renders dedicated blog, links, and reserved academic index pages", 
 
   const links = await renderHtml("/links");
   assert.match(links, /<title>Links · Haoyang Ye<\/title>/i);
-  assert.match(links, /github\.com\/yhyfhgs/);
-  assert.match(links, /orcid\.org\/0009-0009-3215-2811/);
-  assert.match(links, /x\.com\/2FH5GS/);
-  assert.match(links, /mailto:2501112105@stu\.pku\.edu\.cn/);
-  assert.match(links, /https:\/\/www\.pku\.edu\.cn\//);
-  assert.match(links, /href="\/academic"/);
+  assert.match(links, /<meta name="robots" content="noindex, follow"/);
+  const linksMain = mainContent(links);
+  assert.match(linksMain, /class="friend-links-slot" data-state="empty"/);
+  assert.doesNotMatch(linksMain, /<a\b|GitHub|ORCID|@2FH5GS|2501112105|Peking University/);
 
   const academic = await renderHtml("/academic");
   assert.match(academic, /<title>Academic Index · Haoyang Ye<\/title>/i);
@@ -250,6 +265,7 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   assert.match(workflow, /path: dist\/client/);
   assert.match(robots, /Sitemap: https:\/\/yhyfhgs\.github\.io\/sitemap\.xml/);
   assert.match(sitemap, /publications\/equilibrium-analysis-network-externalities/);
+  assert.doesNotMatch(sitemap, /<loc>https:\/\/yhyfhgs\.github\.io\/links\//);
 
   await assert.rejects(access(new URL("../public/haoyang-ye-cv-en.pdf", import.meta.url)));
   await assert.rejects(access(new URL("../public/haoyang-ye-cv-zh.pdf", import.meta.url)));
