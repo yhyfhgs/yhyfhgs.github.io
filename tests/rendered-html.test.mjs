@@ -159,6 +159,14 @@ test("server-renders complete official metadata on both publication detail pages
   assert.match(voting, /F016 · JEL D72, D82, D85/);
   assert.match(voting, /School of Computer Science, Peking University/);
   assert.match(voting, /network externalities/);
+  assert.match(
+    voting,
+    /In practice, voting often involves participation costs, and voters’ decisions are determined not only by their private interests/,
+  );
+  assert.match(
+    voting,
+    /Numerical simulations further show that voters’ participation rates \(i\.e\., the probabilities of voting rather than abstaining\) decrease/,
+  );
   assert.match(voting, /grant 72303011/);
   assert.match(voting, /ccj\.pku\.edu\.cn\/article\/info\?aid=749989351395397/);
   assert.match(voting, /BibTeX/);
@@ -175,9 +183,30 @@ test("server-renders complete official metadata on both publication detail pages
   assert.match(icsap, /10\.1007\/978-3-032-00800-8_33/);
   assert.match(icsap, /Corresponding author<!-- -->: <!-- -->Yaodong Yang/);
   assert.match(icsap, /Institute for Artificial Intelligence, Peking University/);
+  assert.match(
+    icsap,
+    /The burgeoning integration of artificial intelligence \(AI\) into human society brings forth significant implications/,
+  );
+  assert.match(
+    icsap,
+    /We further discuss three classical game problems for achieving IC: mechanism design, contract theory, and Bayesian persuasion/,
+  );
   assert.match(icsap, /National Natural Science Foundation of China, grant 62376013/);
   assert.match(icsap, /dl\.acm\.org\/doi\/10\.1007\/978-3-032-00800-8_33/);
   assert.match(icsap, /link\.springer\.com\/chapter\/10\.1007\/978-3-032-00800-8_33/);
+
+  const publicationSource = await readFile(
+    new URL("../app/components/AcademicSite.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(
+    publicationSource,
+    /现实中投票往往存在参与成本，且个体的投票决策不仅取决于自身利益，也受到社会网络中其他人的影响。/,
+  );
+  assert.match(
+    publicationSource,
+    /数值模拟结果进一步表明：选民的投票参与度（即选择投票而非弃权的概率）会随着网络外部性强度的增加或网络连接程度的增强而下降。/,
+  );
 });
 
 test("server-renders dedicated blog, empty friend-links, and reserved academic index pages", async () => {

@@ -115,7 +115,7 @@ const copy = {
           authors: "Haoyang Ye, Jingyang Huang, Fanqi Shi",
           correspondingAuthor: "Fanqi Shi",
           abstract:
-            "This paper studies simple majority voting when participation is costly and individual values depend on a social network. It establishes equilibrium existence and a two-threshold strategy structure. Under linear network effects and symmetric expected payoffs, nonregular networks support only asymmetric equilibria; regular networks admit a symmetric equilibrium, which is unique when network effects are weak. Numerical results show that stronger network effects or denser connections reduce voter participation.",
+            "In practice, voting often involves participation costs, and voters’ decisions are determined not only by their private interests but also by others’ values within their social networks. This paper investigates the equilibrium characteristics of simple majority voting in a general model featuring costly voting and interdependent values. First, this paper proves the existence of voting equilibria and characterizes the two-threshold strategy structure adopted by voters in any equilibrium. Second, under the assumptions of linear network externalities and symmetric expected payoffs, this paper examines how network structure affects voting equilibria. The theoretical analysis reveals that if the social network is an irregular graph, only asymmetric equilibria exist. In contrast, symmetric equilibria always exist in regular graphs and are unique when network externalities are relatively weak. Numerical simulations further show that voters’ participation rates (i.e., the probabilities of voting rather than abstaining) decrease with increasing strength of network externalities or greater network connectivity.",
           keywords: [
             "network externalities",
             "simple majority voting",
@@ -173,7 +173,7 @@ const copy = {
             "Zhaowei Zhang, Fengshuo Bai, Mingzhi Wang, Haoyang Ye, Chengdong Ma, Yaodong Yang",
           correspondingAuthor: "Yaodong Yang",
           abstract:
-            "The paper introduces the Incentive Compatibility Sociotechnical Alignment Problem (ICSAP), motivated by the gap between technically focused alignment methods and the social settings in which AI is deployed. It considers how incentive compatibility can connect technical and societal components, then examines mechanism design, contract theory, and Bayesian persuasion as three routes toward sociotechnical alignment, outlining their potential, challenges, and preliminary implementation ideas.",
+            "The burgeoning integration of artificial intelligence (AI) into human society brings forth significant implications for societal governance and safety. While considerable strides have been made in addressing AI alignment challenges, existing methodologies primarily focus on technical facets, often neglecting the intricate sociotechnical nature of AI systems, which can lead to a misalignment between the development and deployment contexts. To this end, we posit a new problem worth exploring: Incentive Compatibility Sociotechnical Alignment Problem (ICSAP). We hope this can call for more researchers to explore how to leverage the principles of Incentive Compatibility (IC) from game theory to bridge the gap between technical and societal components to maintain AI consensus with human societies in different contexts. We further discuss three classical game problems for achieving IC: mechanism design, contract theory, and Bayesian persuasion, in addressing the perspectives, potentials, and challenges of solving ICSAP, and provide preliminary implementation conceptions.",
           keywords: [
             "incentive compatibility",
             "collaborative intelligence",
@@ -373,7 +373,7 @@ const copy = {
           authors: "叶昊洋、黄婧扬、石凡奇",
           correspondingAuthor: "石凡奇",
           abstract:
-            "本文在同时存在投票成本与相依价值的一般模型中研究简单多数投票。文章证明投票均衡存在，并刻画所有均衡遵循的双阈值策略。在线性网络外部性和期望收益对称的条件下，非正则网络仅存在非对称均衡；正则网络一定存在对称均衡，且在网络外部性较弱时具有唯一性。数值结果表明，网络外部性增强或网络连接加密会降低选民参与投票的概率。",
+            "现实中投票往往存在参与成本，且个体的投票决策不仅取决于自身利益，也受到社会网络中其他人的影响。本文在一般的投票成本与相依价值模型框架下，研究简单多数投票的均衡特征。首先，我们证明了投票博弈均衡的存在性，并进一步刻画了所有均衡所遵循的二阈值策略结构。其次，在线性网络外部性与期望收益对称性的假设下，我们考察了网络结构对投票均衡的影响机制。理论分析表明：当社会网络为非正则图结构时，投票博弈仅存在非对称均衡；相对应地，在正则图结构的社会网络中，对称均衡一定存在，且当网络外部性较弱时，该均衡具有唯一性。数值模拟结果进一步表明：选民的投票参与度（即选择投票而非弃权的概率）会随着网络外部性强度的增加或网络连接程度的增强而下降。",
           keywords: [
             "网络外部性",
             "简单多数投票",
@@ -431,7 +431,7 @@ const copy = {
             "Zhaowei Zhang, Fengshuo Bai, Mingzhi Wang, Haoyang Ye, Chengdong Ma, Yaodong Yang",
           correspondingAuthor: "Yaodong Yang",
           abstract:
-            "论文提出激励相容社会技术对齐问题（ICSAP），关注以技术为中心的 AI 对齐方法与系统实际部署社会环境之间的错位。文章讨论如何以激励相容原则连接技术与社会组成部分，并从机制设计、契约理论和贝叶斯劝说三个方向分析社会技术对齐的潜力、挑战与初步实现构想。",
+            "The burgeoning integration of artificial intelligence (AI) into human society brings forth significant implications for societal governance and safety. While considerable strides have been made in addressing AI alignment challenges, existing methodologies primarily focus on technical facets, often neglecting the intricate sociotechnical nature of AI systems, which can lead to a misalignment between the development and deployment contexts. To this end, we posit a new problem worth exploring: Incentive Compatibility Sociotechnical Alignment Problem (ICSAP). We hope this can call for more researchers to explore how to leverage the principles of Incentive Compatibility (IC) from game theory to bridge the gap between technical and societal components to maintain AI consensus with human societies in different contexts. We further discuss three classical game problems for achieving IC: mechanism design, contract theory, and Bayesian persuasion, in addressing the perspectives, potentials, and challenges of solving ICSAP, and provide preliminary implementation conceptions.",
           keywords: [
             "incentive compatibility",
             "collaborative intelligence",
