@@ -11,7 +11,7 @@ The GitHub Pages site is the canonical public version.
 - Research experience, education, honors, and source-backed profile details
 - Publication index and individual publication pages with official metadata
 - Homepage contact links for email, GitHub, ORCID, and X
-- Separate Blog, empty friend-links, and Academic Index pages
+- Separate Blog, friend-links, and Academic Index pages
 - English/Chinese and light/dark controls
 - Reserved News, Talks, Teaching, Projects & Software, Service, and CV areas
 

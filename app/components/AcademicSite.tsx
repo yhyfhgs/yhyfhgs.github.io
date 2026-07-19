@@ -263,6 +263,13 @@ const copy = {
     },
     links: {
       title: "Links",
+      items: [
+        {
+          name: "Yuechen Zhu",
+          description: "A group is a groupoid with a single object.",
+          href: "https://zzzyc001.github.io/",
+        },
+      ],
     },
     academic: {
       title: "Academic Index",
@@ -520,6 +527,13 @@ const copy = {
     },
     links: {
       title: "友链",
+      items: [
+        {
+          name: "Yuechen Zhu",
+          description: "A group is a groupoid with a single object.",
+          href: "https://zzzyc001.github.io/",
+        },
+      ],
     },
     academic: {
       title: "学术索引",
@@ -984,7 +998,25 @@ function LinksPage({ content }: { content: SiteContent }) {
   return (
     <div id="top" className="subpage narrow-page">
       <PageHeader title={content.links.title} />
-      <div className="friend-links-slot" data-state="empty" aria-hidden="true" />
+      <div className="friend-links-list">
+        {content.links.items.map((friend) => (
+          <a
+            className="friend-link"
+            href={friend.href}
+            key={friend.href}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="friend-link-copy">
+              <strong>{friend.name}</strong>
+              <span>{friend.description}</span>
+            </span>
+            <span className="friend-link-domain" aria-hidden="true">
+              zzzyc001.github.io ↗
+            </span>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

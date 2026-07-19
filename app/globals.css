@@ -674,10 +674,48 @@ main,
   font-size: 1.1rem;
 }
 
-.friend-links-slot {
-  min-height: 12rem;
+.friend-links-list {
   border-top: 1px solid var(--line);
+}
+
+.friend-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2rem;
+  padding-block: 1.5rem;
   border-bottom: 1px solid var(--line);
+}
+
+.friend-link-copy {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.friend-link-copy strong {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.friend-link-copy > span {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.friend-link-domain {
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+.friend-link:hover .friend-link-copy strong,
+.friend-link:focus-visible .friend-link-copy strong {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.3rem;
 }
 
 .academic-module {
@@ -840,6 +878,11 @@ button:focus-visible {
   .publication-detail-section {
     grid-template-columns: 1fr;
     gap: 1.2rem;
+  }
+
+  .friend-link {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
   }
 
   .site-footer {

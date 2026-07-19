@@ -209,7 +209,7 @@ test("server-renders complete official metadata on both publication detail pages
   );
 });
 
-test("server-renders dedicated blog, empty friend-links, and reserved academic index pages", async () => {
+test("server-renders dedicated blog, friend-links, and reserved academic index pages", async () => {
   const blog = await renderHtml("/blog");
   assert.match(blog, /<title>Blog · Haoyang Ye<\/title>/i);
   assert.match(blog, /No posts yet\./);
@@ -217,10 +217,14 @@ test("server-renders dedicated blog, empty friend-links, and reserved academic i
 
   const links = await renderHtml("/links");
   assert.match(links, /<title>Links · Haoyang Ye<\/title>/i);
-  assert.match(links, /<meta name="robots" content="noindex, follow"/);
+  assert.doesNotMatch(links, /<meta name="robots" content="noindex/);
   const linksMain = mainContent(links);
-  assert.match(linksMain, /class="friend-links-slot" data-state="empty"/);
-  assert.doesNotMatch(linksMain, /<a\b|GitHub|ORCID|@2FH5GS|2501112105|Peking University/);
+  assert.match(linksMain, /class="friend-links-list"/);
+  assert.match(linksMain, /class="friend-link" href="https:\/\/zzzyc001\.github\.io\/"/);
+  assert.match(linksMain, /Yuechen Zhu/);
+  assert.match(linksMain, /A group is a groupoid with a single object\./);
+  assert.match(linksMain, /zzzyc001\.github\.io ↗/);
+  assert.doesNotMatch(linksMain, /GitHub|ORCID|@2FH5GS|2501112105|Peking University/);
 
   const academic = await renderHtml("/academic");
   assert.match(academic, /<title>Academic Index · Haoyang Ye<\/title>/i);
@@ -252,6 +256,7 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
     access(new URL("../public/icon.svg", import.meta.url)),
     access(new URL("../public/og.png", import.meta.url)),
     access(new URL("../dist/client/index.html", import.meta.url)),
+    access(new URL("../dist/client/links/index.html", import.meta.url)),
     access(new URL("../dist/client/publications/index.html", import.meta.url)),
     access(new URL("../dist/client/academic/index.html", import.meta.url)),
     access(
@@ -294,7 +299,7 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   assert.match(workflow, /path: dist\/client/);
   assert.match(robots, /Sitemap: https:\/\/yhyfhgs\.github\.io\/sitemap\.xml/);
   assert.match(sitemap, /publications\/equilibrium-analysis-network-externalities/);
-  assert.doesNotMatch(sitemap, /<loc>https:\/\/yhyfhgs\.github\.io\/links\//);
+  assert.match(sitemap, /<loc>https:\/\/yhyfhgs\.github\.io\/links\/<\/loc>/);
 
   await assert.rejects(access(new URL("../public/haoyang-ye-cv-en.pdf", import.meta.url)));
   await assert.rejects(access(new URL("../public/haoyang-ye-cv-zh.pdf", import.meta.url)));
