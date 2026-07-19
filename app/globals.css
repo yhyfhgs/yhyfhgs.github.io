@@ -687,8 +687,27 @@ main,
   border-bottom: 1px solid var(--line);
 }
 
+.friend-link-identity {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 1rem;
+}
+
+.friend-link-avatar {
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  flex: 0 0 3.5rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--paper);
+  object-fit: cover;
+}
+
 .friend-link-copy {
   display: grid;
+  min-width: 0;
   gap: 0.35rem;
 }
 
@@ -704,7 +723,7 @@ main,
   font-size: 0.95rem;
 }
 
-.friend-link-domain {
+.friend-link-action {
   color: var(--accent);
   font-family: var(--font-sans);
   font-size: 0.76rem;
@@ -716,6 +735,11 @@ main,
   text-decoration: underline;
   text-decoration-color: var(--accent);
   text-underline-offset: 0.3rem;
+}
+
+.friend-link:hover .friend-link-avatar,
+.friend-link:focus-visible .friend-link-avatar {
+  border-color: var(--accent);
 }
 
 .academic-module {

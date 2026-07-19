@@ -21,6 +21,7 @@ const EMAIL = "2501112105@stu.pku.edu.cn";
 const GITHUB_URL = "https://github.com/yhyfhgs";
 const ORCID_URL = "https://orcid.org/0009-0009-3215-2811";
 const X_URL = "https://x.com/2FH5GS";
+const YUECHEN_AVATAR = "/friends/yuechen-zhu-avatar.jpg";
 
 const copy = {
   en: {
@@ -263,11 +264,13 @@ const copy = {
     },
     links: {
       title: "Links",
+      visit: "Visit",
       items: [
         {
           name: "Yuechen Zhu",
           description: "A group is a groupoid with a single object.",
           href: "https://zzzyc001.github.io/",
+          avatar: YUECHEN_AVATAR,
         },
       ],
     },
@@ -527,11 +530,13 @@ const copy = {
     },
     links: {
       title: "友链",
+      visit: "访问主页",
       items: [
         {
           name: "Yuechen Zhu",
           description: "A group is a groupoid with a single object.",
           href: "https://zzzyc001.github.io/",
+          avatar: YUECHEN_AVATAR,
         },
       ],
     },
@@ -842,11 +847,13 @@ function HomePage({ content }: { content: SiteContent }) {
         <SectionLabel title={content.links.title} />
         <div className="section-body">
           <Link
-            className="preview-row preview-row-empty"
+            className="preview-row"
             href="/links"
             aria-label={`${content.links.title}: ${content.shared.openPage}`}
           >
-            <span aria-hidden="true" />
+            <span>
+              {content.links.items[0].name} · {content.links.items[0].description}
+            </span>
             <em>{content.shared.openPage} →</em>
           </Link>
         </div>
@@ -1007,12 +1014,23 @@ function LinksPage({ content }: { content: SiteContent }) {
             target="_blank"
             rel="noreferrer"
           >
-            <span className="friend-link-copy">
-              <strong>{friend.name}</strong>
-              <span>{friend.description}</span>
+            <span className="friend-link-identity">
+              <img
+                className="friend-link-avatar"
+                src={friend.avatar}
+                alt=""
+                width="56"
+                height="56"
+                loading="lazy"
+                decoding="async"
+              />
+              <span className="friend-link-copy">
+                <strong>{friend.name}</strong>
+                <span>{friend.description}</span>
+              </span>
             </span>
-            <span className="friend-link-domain" aria-hidden="true">
-              zzzyc001.github.io ↗
+            <span className="friend-link-action" aria-hidden="true">
+              {`${content.links.visit} ↗`}
             </span>
           </a>
         ))}

@@ -127,7 +127,9 @@ test("server-renders the restrained homepage with only source-backed profile con
   const linksSection = sectionById(html, "links-preview");
   assert.match(linksSection, />Links</);
   assert.match(linksSection, /href="\/links"/);
-  assert.match(linksSection, /class="preview-row preview-row-empty"/);
+  assert.match(linksSection, /Yuechen Zhu/);
+  assert.match(linksSection, /A group is a groupoid with a single object\./);
+  assert.doesNotMatch(linksSection, /preview-row-empty/);
   assert.doesNotMatch(linksSection, /GitHub|ORCID|@2FH5GS|2501112105/);
   assert.doesNotMatch(linksSection, /href="\/blog"/);
 });
@@ -223,7 +225,11 @@ test("server-renders dedicated blog, friend-links, and reserved academic index p
   assert.match(linksMain, /class="friend-link" href="https:\/\/zzzyc001\.github\.io\/"/);
   assert.match(linksMain, /Yuechen Zhu/);
   assert.match(linksMain, /A group is a groupoid with a single object\./);
-  assert.match(linksMain, /zzzyc001\.github\.io ↗/);
+  assert.match(linksMain, /class="friend-link-avatar"/);
+  assert.match(linksMain, /src="\/friends\/yuechen-zhu-avatar\.jpg"/);
+  assert.match(linksMain, />Visit ↗<\/span>/);
+  assert.doesNotMatch(linksMain, /friend-link-domain/);
+  assert.doesNotMatch(linksMain, />\s*zzzyc001\.github\.io ↗\s*</);
   assert.doesNotMatch(linksMain, /GitHub|ORCID|@2FH5GS|2501112105|Peking University/);
 
   const academic = await renderHtml("/academic");
@@ -255,8 +261,10 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   await Promise.all([
     access(new URL("../public/icon.svg", import.meta.url)),
     access(new URL("../public/og.png", import.meta.url)),
+    access(new URL("../public/friends/yuechen-zhu-avatar.jpg", import.meta.url)),
     access(new URL("../dist/client/index.html", import.meta.url)),
     access(new URL("../dist/client/links/index.html", import.meta.url)),
+    access(new URL("../dist/client/friends/yuechen-zhu-avatar.jpg", import.meta.url)),
     access(new URL("../dist/client/publications/index.html", import.meta.url)),
     access(new URL("../dist/client/academic/index.html", import.meta.url)),
     access(
@@ -277,6 +285,8 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   assert.match(component, /hy-theme/);
   assert.match(component, /github\.com\/yhyfhgs/);
   assert.match(component, /orcid\.org\/0009-0009-3215-2811/);
+  assert.match(component, /visit: "Visit"/);
+  assert.match(component, /visit: "访问主页"/);
   assert.match(component, /PageKey =[\s\S]*"academic"/);
   assert.doesNotMatch(component, /hero-role|portrait-frame|content\.hero\.role/);
   assert.doesNotMatch(layout, /haoyang-ye(?:-icon)?\.jpg/);
