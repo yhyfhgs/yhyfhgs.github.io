@@ -1,23 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
   <url>
     <loc>https://yhyfhgs.github.io/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-07-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/" />
+  </url>
+  <url>
+    <loc>https://yhyfhgs.github.io/zh/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/" />
   </url>
   <url>
     <loc>https://yhyfhgs.github.io/publications/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-07-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/publications/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/publications/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/publications/" />
+  </url>
+  <url>
+    <loc>https://yhyfhgs.github.io/zh/publications/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/publications/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/publications/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/publications/" />
   </url>
   <url>
     <loc>https://yhyfhgs.github.io/publications/equilibrium-analysis-network-externalities/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-07-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/publications/equilibrium-analysis-network-externalities/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/publications/equilibrium-analysis-network-externalities/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/publications/equilibrium-analysis-network-externalities/" />
+  </url>
+  <url>
+    <loc>https://yhyfhgs.github.io/zh/publications/equilibrium-analysis-network-externalities/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/publications/equilibrium-analysis-network-externalities/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/publications/equilibrium-analysis-network-externalities/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/publications/equilibrium-analysis-network-externalities/" />
   </url>
   <url>
     <loc>https://yhyfhgs.github.io/publications/incentive-compatibility-ai-alignment/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-07-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/publications/incentive-compatibility-ai-alignment/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/publications/incentive-compatibility-ai-alignment/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/publications/incentive-compatibility-ai-alignment/" />
   </url>
   <url>
-    <loc>https://yhyfhgs.github.io/links/</loc>
-    <lastmod>2026-07-19</lastmod>
+    <loc>https://yhyfhgs.github.io/zh/publications/incentive-compatibility-ai-alignment/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/publications/incentive-compatibility-ai-alignment/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/publications/incentive-compatibility-ai-alignment/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/publications/incentive-compatibility-ai-alignment/" />
   </url>
 </urlset>

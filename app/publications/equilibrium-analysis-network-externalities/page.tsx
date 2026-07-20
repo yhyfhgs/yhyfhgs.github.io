@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import AcademicSite from "../../components/AcademicSite";
+import JsonLd from "../../components/JsonLd";
+import { publicationJsonLd, publicationMetadata } from "../../seo";
 
-export const metadata: Metadata = {
-  title: "Equilibrium Analysis of Simple Majority Voting · Haoyang Ye",
-  description:
-    "Publication details for Equilibrium Analysis of Simple Majority Voting under Network Externalities.",
-  alternates: {
-    canonical: "/publications/equilibrium-analysis-network-externalities/",
-  },
-};
+const slug = "equilibrium-analysis-network-externalities" as const;
+
+export const metadata = publicationMetadata(slug, "en");
 
 export default function VotingPublication() {
-  return <AcademicSite page="publication-voting" />;
+  return (
+    <>
+      <JsonLd data={publicationJsonLd(slug, "en")} />
+      <AcademicSite page="publication-voting" />
+    </>
+  );
 }

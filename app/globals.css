@@ -106,6 +106,7 @@ button {
 .publication-facts,
 .back-link,
 .publication-detail-section h2,
+.breadcrumbs,
 .resource-links,
 .academic-module h2,
 .cv-download-placeholder,
@@ -161,16 +162,17 @@ button {
   color: var(--ink-faint);
 }
 
-.text-control button {
+.text-control :is(button, a) {
   padding: 0.15rem 0.12rem;
   border: 0;
   background: transparent;
   cursor: pointer;
+  color: inherit;
   font-family: var(--font-sans);
   font-size: inherit;
 }
 
-.text-control button[aria-pressed="true"] {
+.text-control :is(button[aria-pressed="true"], a[aria-current="page"]) {
   color: var(--ink);
   text-decoration: underline;
   text-decoration-color: var(--accent);
@@ -332,8 +334,8 @@ main,
   line-height: 1.5;
 }
 
-.research-item h2,
-.compact-list h2,
+.research-item h3,
+.compact-list h3,
 .publication-item h2 {
   margin: 0;
   font-family: var(--font-sans);
@@ -409,10 +411,15 @@ main,
   font-size: 0.9rem;
 }
 
-.honors-list h2 {
+.honors-list h3 {
   font-family: var(--font-serif);
   font-size: 1.05rem;
   line-height: 1.5;
+}
+
+.compact-list h3 a:hover,
+.compact-list h3 a:focus-visible {
+  color: var(--accent);
 }
 
 .home-endmatter {
@@ -456,6 +463,60 @@ main,
 
 .narrow-page {
   width: min(100%, 41rem);
+}
+
+.not-found-page h1 {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+.not-found-page > p:not(.kicker) {
+  max-width: 31rem;
+  margin: 1.5rem 0 0;
+  color: var(--ink-soft);
+}
+
+.breadcrumbs {
+  margin-bottom: 1.6rem;
+  color: var(--ink-faint);
+  font-size: 0.69rem;
+  line-height: 1.5;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumbs li {
+  min-width: 0;
+}
+
+.breadcrumbs li + li::before {
+  margin-right: 0.35rem;
+  color: var(--line-strong);
+  content: "/";
+}
+
+.breadcrumbs a:hover,
+.breadcrumbs a:focus-visible {
+  color: var(--ink);
+}
+
+.breadcrumbs li[aria-current="page"] {
+  max-width: min(34rem, 75vw);
+  overflow: hidden;
+  color: var(--ink-soft);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .page-header {

@@ -6,7 +6,7 @@ import { FaGithub } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { SiOrcid, SiX } from "react-icons/si";
 
-type Language = "en" | "zh";
+export type Language = "en" | "zh";
 type Theme = "light" | "dark";
 export type PageKey =
   | "home"
@@ -22,6 +22,26 @@ const GITHUB_URL = "https://github.com/yhyfhgs";
 const ORCID_URL = "https://orcid.org/0009-0009-3215-2811";
 const X_URL = "https://x.com/FHGSYHY";
 const YUECHEN_AVATAR = "/friends/yuechen-zhu-avatar.jpg";
+
+const pageRoutes: Record<PageKey, string> = {
+  home: "/",
+  publications: "/publications/",
+  "publication-voting":
+    "/publications/equilibrium-analysis-network-externalities/",
+  "publication-icsap": "/publications/incentive-compatibility-ai-alignment/",
+  blog: "/blog/",
+  links: "/links/",
+  academic: "/academic/",
+};
+
+function localizedPath(page: PageKey, language: Language) {
+  const path = pageRoutes[page];
+  return language === "en" ? path : path === "/" ? "/zh/" : `/zh${path}`;
+}
+
+function localizedHomeAnchor(language: Language, anchor: string) {
+  return `${localizedPath("home", language)}${anchor}`;
+}
 
 const copy = {
   en: {
@@ -110,6 +130,7 @@ const copy = {
           slug: "equilibrium-analysis-network-externalities",
           venue: "Economic Science · 47(5) · 2025",
           date: "Published 20 Oct 2025",
+          dateTime: "2025-10-20",
           title:
             "Equilibrium Analysis of Simple Majority Voting under Network Externalities",
           secondaryTitle: "网络外部性下简单多数投票的均衡分析",
@@ -150,14 +171,6 @@ const copy = {
               href: "https://ccj.pku.edu.cn/article/info?aid=749989351395397",
             },
             {
-              label: "DOI",
-              href: "https://doi.org/10.12088/PKU.jjkx.2025.05.06",
-            },
-            {
-              label: "PDF",
-              href: "https://ccj.pku.edu.cn/Article/DownLoad?id=749989351395397&type=ArticleFile",
-            },
-            {
               label: "BibTeX",
               href: "https://ccj.pku.edu.cn/Article/DownLoad/749989351395397?type=BibTeX",
             },
@@ -167,6 +180,7 @@ const copy = {
           slug: "incentive-compatibility-ai-alignment",
           venue: "AGI 2025 · LNCS 16058",
           date: "First online 07 Aug 2025 · Citation year 2026",
+          dateTime: "2025-08-07",
           title:
             "Roadmap on Incentive Compatibility for AI Alignment and Governance in Sociotechnical Systems",
           secondaryTitle: "",
@@ -378,6 +392,7 @@ const copy = {
           slug: "equilibrium-analysis-network-externalities",
           venue: "《经济科学》 · 47(5) · 2025",
           date: "2025 年 10 月 20 日刊登",
+          dateTime: "2025-10-20",
           title: "网络外部性下简单多数投票的均衡分析",
           secondaryTitle:
             "Equilibrium Analysis of Simple Majority Voting under Network Externalities",
@@ -418,14 +433,6 @@ const copy = {
               href: "https://ccj.pku.edu.cn/article/info?aid=749989351395397",
             },
             {
-              label: "DOI",
-              href: "https://doi.org/10.12088/PKU.jjkx.2025.05.06",
-            },
-            {
-              label: "PDF",
-              href: "https://ccj.pku.edu.cn/Article/DownLoad?id=749989351395397&type=ArticleFile",
-            },
-            {
               label: "BibTeX",
               href: "https://ccj.pku.edu.cn/Article/DownLoad/749989351395397?type=BibTeX",
             },
@@ -435,6 +442,7 @@ const copy = {
           slug: "incentive-compatibility-ai-alignment",
           venue: "AGI 2025 · LNCS 16058",
           date: "2025 年 8 月 7 日在线刊登 · 正式引用年份 2026",
+          dateTime: "2025-08-07",
           title:
             "Roadmap on Incentive Compatibility for AI Alignment and Governance in Sociotechnical Systems",
           secondaryTitle: "",
@@ -563,20 +571,20 @@ const copy = {
 
 type SiteContent = (typeof copy)[Language];
 
-export default function AcademicSite({ page }: { page: PageKey }) {
-  const [language, setLanguage] = useState<Language>("en");
+export default function AcademicSite({
+  page,
+  initialLanguage = "en",
+}: {
+  page: PageKey;
+  initialLanguage?: Language;
+}) {
+  const language = initialLanguage;
   const [theme, setTheme] = useState<Theme>("light");
   const content = copy[language];
   const publicationsActive = page === "publications" || page.startsWith("publication-");
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      const savedLanguage = window.localStorage.getItem("hy-language");
-      if (savedLanguage === "en" || savedLanguage === "zh") {
-        setLanguage(savedLanguage);
-        document.documentElement.lang = savedLanguage === "zh" ? "zh-CN" : "en";
-      }
-
       const savedTheme = window.localStorage.getItem("hy-theme");
       const preferredTheme: Theme =
         savedTheme === "light" || savedTheme === "dark"
@@ -592,12 +600,6 @@ export default function AcademicSite({ page }: { page: PageKey }) {
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
-  const selectLanguage = (nextLanguage: Language) => {
-    setLanguage(nextLanguage);
-    window.localStorage.setItem("hy-language", nextLanguage);
-    document.documentElement.lang = nextLanguage === "zh" ? "zh-CN" : "en";
-  };
-
   const selectTheme = (nextTheme: Theme) => {
     setTheme(nextTheme);
     window.localStorage.setItem("hy-theme", nextTheme);
@@ -611,26 +613,43 @@ export default function AcademicSite({ page }: { page: PageKey }) {
         {content.skip}
       </a>
 
-      <header className="site-header" aria-label="Primary">
-        <Link className="site-wordmark" href="/" aria-label={content.brandLabel}>
+      <header
+        className="site-header"
+        aria-label="Primary"
+        lang={language === "zh" ? "zh-CN" : "en"}
+      >
+        <Link
+          className="site-wordmark"
+          href={localizedPath("home", language)}
+          aria-label={content.brandLabel}
+        >
           {content.hero.name}
         </Link>
 
         <nav className="main-nav" aria-label="Primary navigation">
-          <Link href="/" aria-current={page === "home" ? "page" : undefined}>
+          <Link
+            href={localizedPath("home", language)}
+            aria-current={page === "home" ? "page" : undefined}
+          >
             {content.nav.home}
           </Link>
-          <Link href="/#research">{content.nav.research}</Link>
+          <Link href={localizedHomeAnchor(language, "#research")}>{content.nav.research}</Link>
           <Link
-            href="/publications"
+            href={localizedPath("publications", language)}
             aria-current={publicationsActive ? "page" : undefined}
           >
             {content.nav.publications}
           </Link>
-          <Link href="/blog" aria-current={page === "blog" ? "page" : undefined}>
+          <Link
+            href={localizedPath("blog", language)}
+            aria-current={page === "blog" ? "page" : undefined}
+          >
             {content.nav.blog}
           </Link>
-          <Link href="/links" aria-current={page === "links" ? "page" : undefined}>
+          <Link
+            href={localizedPath("links", language)}
+            aria-current={page === "links" ? "page" : undefined}
+          >
             {content.nav.links}
           </Link>
         </nav>
@@ -641,21 +660,23 @@ export default function AcademicSite({ page }: { page: PageKey }) {
             role="group"
             aria-label={content.controls.language}
           >
-            <button
-              type="button"
-              aria-pressed={language === "en"}
-              onClick={() => selectLanguage("en")}
+            <Link
+              href={localizedPath(page, "en")}
+              hrefLang="en"
+              lang="en"
+              aria-current={language === "en" ? "page" : undefined}
             >
               EN
-            </button>
+            </Link>
             <span aria-hidden="true">/</span>
-            <button
-              type="button"
-              aria-pressed={language === "zh"}
-              onClick={() => selectLanguage("zh")}
+            <Link
+              href={localizedPath(page, "zh")}
+              hrefLang="zh-Hans"
+              lang="zh-CN"
+              aria-current={language === "zh" ? "page" : undefined}
             >
               中文
-            </button>
+            </Link>
           </div>
           <div
             className="text-control"
@@ -681,31 +702,43 @@ export default function AcademicSite({ page }: { page: PageKey }) {
         </div>
       </header>
 
-      <main id="main-content">
-        {page === "home" && <HomePage content={content} />}
-        {page === "publications" && <PublicationsPage content={content} />}
+      <main id="main-content" lang={language === "zh" ? "zh-CN" : "en"}>
+        {page === "home" && <HomePage content={content} language={language} />}
+        {page === "publications" && (
+          <PublicationsPage content={content} language={language} />
+        )}
         {page === "publication-voting" && (
-          <PublicationDetailPage content={content} publicationIndex={0} />
+          <PublicationDetailPage
+            content={content}
+            language={language}
+            publicationIndex={0}
+          />
         )}
         {page === "publication-icsap" && (
-          <PublicationDetailPage content={content} publicationIndex={1} />
+          <PublicationDetailPage
+            content={content}
+            language={language}
+            publicationIndex={1}
+          />
         )}
-        {page === "blog" && <BlogPage content={content} />}
-        {page === "links" && <LinksPage content={content} />}
-        {page === "academic" && <AcademicIndexPage content={content} />}
+        {page === "blog" && <BlogPage content={content} language={language} />}
+        {page === "links" && <LinksPage content={content} language={language} />}
+        {page === "academic" && (
+          <AcademicIndexPage content={content} language={language} />
+        )}
       </main>
 
-      <footer className="site-footer">
+      <footer className="site-footer" lang={language === "zh" ? "zh-CN" : "en"}>
         <span>© 2026 Haoyang Ye · {content.footer.note}</span>
         <nav className="footer-links" aria-label={content.footer.linksLabel}>
           <a href={"mailto:" + EMAIL}>{content.hero.email} ↗</a>
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer">
+          <a href={GITHUB_URL} target="_blank" rel="me noreferrer">
             {content.hero.github} ↗
           </a>
-          <a href={ORCID_URL} target="_blank" rel="noreferrer">
+          <a href={ORCID_URL} target="_blank" rel="me noreferrer">
             {content.hero.orcid} ↗
           </a>
-          <a href={X_URL} target="_blank" rel="noreferrer">
+          <a href={X_URL} target="_blank" rel="me noreferrer">
             {content.hero.x} ↗
           </a>
           <a href="#top">{content.footer.top} ↑</a>
@@ -715,7 +748,13 @@ export default function AcademicSite({ page }: { page: PageKey }) {
   );
 }
 
-function HomePage({ content }: { content: SiteContent }) {
+function HomePage({
+  content,
+  language,
+}: {
+  content: SiteContent;
+  language: Language;
+}) {
   return (
     <div id="top" className="home-page">
       <section className="hero">
@@ -733,7 +772,7 @@ function HomePage({ content }: { content: SiteContent }) {
               data-contact="github"
               href={GITHUB_URL}
               target="_blank"
-              rel="noreferrer"
+              rel="me noreferrer"
             >
               <FaGithub aria-hidden="true" focusable="false" />
               <span>{content.hero.github}</span>
@@ -743,7 +782,7 @@ function HomePage({ content }: { content: SiteContent }) {
               data-contact="orcid"
               href={ORCID_URL}
               target="_blank"
-              rel="noreferrer"
+              rel="me noreferrer"
             >
               <SiOrcid aria-hidden="true" focusable="false" />
               <span>{content.hero.orcid}</span>
@@ -753,7 +792,7 @@ function HomePage({ content }: { content: SiteContent }) {
               data-contact="x"
               href={X_URL}
               target="_blank"
-              rel="noreferrer"
+              rel="me noreferrer"
             >
               <SiX aria-hidden="true" focusable="false" />
               <span>{content.hero.x}</span>
@@ -783,7 +822,7 @@ function HomePage({ content }: { content: SiteContent }) {
                   <dd><time className="research-time">{project.period}</time></dd>
                 </div>
               </dl>
-              <h2>{project.title}</h2>
+              <h3>{project.title}</h3>
               {project.advisor && (
                 <p className="advisor">
                   {content.shared.advisor}: {project.advisor}
@@ -805,11 +844,25 @@ function HomePage({ content }: { content: SiteContent }) {
             {content.publications.items.map((publication) => (
               <article key={publication.slug}>
                 <p className="item-meta">{publication.venue}</p>
-                <h2>{publication.title}</h2>
+                <h3>
+                  <Link
+                    href={localizedPath(
+                      publication.slug === "equilibrium-analysis-network-externalities"
+                        ? "publication-voting"
+                        : "publication-icsap",
+                      language,
+                    )}
+                  >
+                    {publication.title}
+                  </Link>
+                </h3>
               </article>
             ))}
           </div>
-          <Link className="text-link" href="/publications">
+          <Link
+            className="text-link"
+            href={localizedPath("publications", language)}
+          >
             {content.shared.allPublications} →
           </Link>
         </div>
@@ -821,7 +874,7 @@ function HomePage({ content }: { content: SiteContent }) {
           {content.education.items.map((item) => (
             <article key={item.date} className="education-item">
               <p className="item-meta">{item.date}</p>
-              <h2>{item.school}</h2>
+              <h3>{item.school}</h3>
               <div className="degree-lines">
                 {item.degreeLines.map((line) => <p key={line}>{line}</p>)}
               </div>
@@ -837,7 +890,7 @@ function HomePage({ content }: { content: SiteContent }) {
           {content.honors.items.map((item) => (
             <article key={item.title}>
               <p className="item-meta">{item.year}</p>
-              <h2>{item.title}</h2>
+              <h3>{item.title}</h3>
             </article>
           ))}
         </div>
@@ -846,7 +899,10 @@ function HomePage({ content }: { content: SiteContent }) {
       <section className="home-section" id="blog-preview">
         <SectionLabel title={content.blog.title} />
         <div className="section-body">
-          <Link className="preview-row" href="/blog">
+          <Link
+            className="preview-row"
+            href={localizedPath("blog", language)}
+          >
             <span>{content.blog.status}</span>
             <em>{content.shared.openPage} →</em>
           </Link>
@@ -858,7 +914,7 @@ function HomePage({ content }: { content: SiteContent }) {
         <div className="section-body">
           <Link
             className="preview-row"
-            href="/links"
+            href={localizedPath("links", language)}
             aria-label={`${content.links.title}: ${content.shared.openPage}`}
           >
             <span>
@@ -872,19 +928,32 @@ function HomePage({ content }: { content: SiteContent }) {
   );
 }
 
-function PublicationsPage({ content }: { content: SiteContent }) {
+function PublicationsPage({
+  content,
+  language,
+}: {
+  content: SiteContent;
+  language: Language;
+}) {
   return (
     <div id="top" className="subpage">
+      <Breadcrumbs
+        content={content}
+        language={language}
+        current={content.publications.title}
+      />
       <PageHeader title={content.publications.title} meta={content.publications.count} />
       <div className="publication-list">
         {content.publications.items.map((publication) => (
           <article className="publication-item" key={publication.slug}>
             <div className="publication-meta">
               <p>{publication.venue}</p>
-              <time>{publication.date}</time>
+              <time dateTime={publication.dateTime}>{publication.date}</time>
             </div>
             <h2>
-              <Link href={`/publications/${publication.slug}`}>{publication.title}</Link>
+              <Link href={`${localizedPath("publications", language)}${publication.slug}/`}>
+                {publication.title}
+              </Link>
             </h2>
             {publication.secondaryTitle && (
               <p className="secondary-title">{publication.secondaryTitle}</p>
@@ -896,7 +965,10 @@ function PublicationsPage({ content }: { content: SiteContent }) {
             <p className="corresponding-author">
               {content.shared.correspondingAuthor}: {publication.correspondingAuthor}
             </p>
-            <Link className="text-link" href={`/publications/${publication.slug}`}>
+            <Link
+              className="text-link"
+              href={`${localizedPath("publications", language)}${publication.slug}/`}
+            >
               {content.shared.viewPublication} →
             </Link>
           </article>
@@ -908,16 +980,30 @@ function PublicationsPage({ content }: { content: SiteContent }) {
 
 function PublicationDetailPage({
   content,
+  language,
   publicationIndex,
 }: {
   content: SiteContent;
+  language: Language;
   publicationIndex: 0 | 1;
 }) {
   const publication = content.publications.items[publicationIndex];
 
   return (
     <article id="top" className="subpage publication-detail-page">
-      <Link className="back-link" href="/publications">
+      <Breadcrumbs
+        content={content}
+        language={language}
+        current={publication.title}
+        parent={{
+          label: content.publications.title,
+          href: localizedPath("publications", language),
+        }}
+      />
+      <Link
+        className="back-link"
+        href={localizedPath("publications", language)}
+      >
         ← {content.shared.backToPublications}
       </Link>
       <header className="publication-detail-header">
@@ -1000,9 +1086,16 @@ function PublicationSection({
   );
 }
 
-function BlogPage({ content }: { content: SiteContent }) {
+function BlogPage({
+  content,
+  language,
+}: {
+  content: SiteContent;
+  language: Language;
+}) {
   return (
     <div id="top" className="subpage narrow-page">
+      <Breadcrumbs content={content} language={language} current={content.blog.title} />
       <PageHeader title={content.blog.title} />
       <div className="empty-state">
         <p>{content.blog.status}</p>
@@ -1011,9 +1104,16 @@ function BlogPage({ content }: { content: SiteContent }) {
   );
 }
 
-function LinksPage({ content }: { content: SiteContent }) {
+function LinksPage({
+  content,
+  language,
+}: {
+  content: SiteContent;
+  language: Language;
+}) {
   return (
     <div id="top" className="subpage narrow-page">
+      <Breadcrumbs content={content} language={language} current={content.links.title} />
       <PageHeader title={content.links.title} />
       <div className="friend-links-list">
         {content.links.items.map((friend) => (
@@ -1025,6 +1125,8 @@ function LinksPage({ content }: { content: SiteContent }) {
             rel="noreferrer"
           >
             <span className="friend-link-identity">
+              {/* The local avatar is already pre-sized and served as a static asset. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="friend-link-avatar"
                 src={friend.avatar}
@@ -1049,9 +1151,20 @@ function LinksPage({ content }: { content: SiteContent }) {
   );
 }
 
-function AcademicIndexPage({ content }: { content: SiteContent }) {
+function AcademicIndexPage({
+  content,
+  language,
+}: {
+  content: SiteContent;
+  language: Language;
+}) {
   return (
     <div id="top" className="subpage narrow-page academic-index">
+      <Breadcrumbs
+        content={content}
+        language={language}
+        current={content.academic.title}
+      />
       <PageHeader title={content.academic.title} />
       <div className="academic-module-list">
         {content.academic.modules.map((module) => (
@@ -1079,6 +1192,34 @@ function AcademicIndexPage({ content }: { content: SiteContent }) {
 
 function SectionLabel({ title }: { title: string }) {
   return <h2 className="section-label">{title}</h2>;
+}
+
+function Breadcrumbs({
+  content,
+  language,
+  current,
+  parent,
+}: {
+  content: SiteContent;
+  language: Language;
+  current: string;
+  parent?: { label: string; href: string };
+}) {
+  return (
+    <nav className="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li>
+          <Link href={localizedPath("home", language)}>{content.nav.home}</Link>
+        </li>
+        {parent && (
+          <li>
+            <Link href={parent.href}>{parent.label}</Link>
+          </li>
+        )}
+        <li aria-current="page">{current}</li>
+      </ol>
+    </nav>
+  );
 }
 
 function PageHeader({ title, meta }: { title: string; meta?: string }) {

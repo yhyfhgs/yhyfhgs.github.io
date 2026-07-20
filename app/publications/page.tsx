@@ -1,12 +1,14 @@
-import type { Metadata } from "next";
 import AcademicSite from "../components/AcademicSite";
+import JsonLd from "../components/JsonLd";
+import { publicationsJsonLd, publicationsMetadata } from "../seo";
 
-export const metadata: Metadata = {
-  title: "Publications · Haoyang Ye",
-  description: "Publications by Haoyang Ye.",
-  alternates: { canonical: "/publications/" },
-};
+export const metadata = publicationsMetadata("en");
 
 export default function Publications() {
-  return <AcademicSite page="publications" />;
+  return (
+    <>
+      <JsonLd data={publicationsJsonLd("en")} />
+      <AcademicSite page="publications" />
+    </>
+  );
 }

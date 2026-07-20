@@ -1,12 +1,7 @@
-import type { Metadata } from "next";
 import AcademicSite from "../components/AcademicSite";
+import { simplePageMetadata } from "../seo";
 
-export const metadata: Metadata = {
-  title: "Blog · Haoyang Ye",
-  description: "Blog by Haoyang Ye.",
-  alternates: { canonical: "/blog/" },
-  robots: { index: false, follow: true },
-};
+export const metadata = simplePageMetadata("blog", "en");
 
 export default function Blog() {
   return <AcademicSite page="blog" />;

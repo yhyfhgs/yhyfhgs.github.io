@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import AcademicSite from "../../components/AcademicSite";
+import JsonLd from "../../components/JsonLd";
+import { publicationJsonLd, publicationMetadata } from "../../seo";
 
-export const metadata: Metadata = {
-  title: "Incentive Compatibility for AI Alignment · Haoyang Ye",
-  description:
-    "Publication details for Roadmap on Incentive Compatibility for AI Alignment and Governance in Sociotechnical Systems.",
-  alternates: {
-    canonical: "/publications/incentive-compatibility-ai-alignment/",
-  },
-};
+const slug = "incentive-compatibility-ai-alignment" as const;
+
+export const metadata = publicationMetadata(slug, "en");
 
 export default function IcsapPublication() {
-  return <AcademicSite page="publication-icsap" />;
+  return (
+    <>
+      <JsonLd data={publicationJsonLd(slug, "en")} />
+      <AcademicSite page="publication-icsap" />
+    </>
+  );
 }

@@ -1,0 +1,16 @@
+{
+  "name": "Haoyang Ye Academic Profile",
+  "short_name": "Haoyang Ye",
+  "description": "Academic profile, research and publications of Haoyang Ye.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

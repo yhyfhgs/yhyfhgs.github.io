@@ -1,11 +1,7 @@
-import type { Metadata } from "next";
 import AcademicSite from "../components/AcademicSite";
+import { simplePageMetadata } from "../seo";
 
-export const metadata: Metadata = {
-  title: "Links · Haoyang Ye",
-  description: "Friend links for Haoyang Ye.",
-  alternates: { canonical: "/links/" },
-};
+export const metadata = simplePageMetadata("links", "en");
 
 export default function Links() {
   return <AcademicSite page="links" />;
