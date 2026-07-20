@@ -20,7 +20,7 @@ export type PageKey =
 const EMAIL = "2501112105@stu.pku.edu.cn";
 const GITHUB_URL = "https://github.com/yhyfhgs";
 const ORCID_URL = "https://orcid.org/0009-0009-3215-2811";
-const X_URL = "https://x.com/2FH5GS";
+const X_URL = "https://x.com/FHGSYHY";
 const YUECHEN_AVATAR = "/friends/yuechen-zhu-avatar.jpg";
 
 const copy = {
@@ -288,6 +288,7 @@ const copy = {
     },
     footer: {
       note: "Academic profile",
+      linksLabel: "Profile links",
       top: "Back to top",
     },
   },
@@ -554,6 +555,7 @@ const copy = {
     },
     footer: {
       note: "学术主页",
+      linksLabel: "个人链接",
       top: "返回顶部",
     },
   },
@@ -695,11 +697,19 @@ export default function AcademicSite({ page }: { page: PageKey }) {
 
       <footer className="site-footer">
         <span>© 2026 Haoyang Ye · {content.footer.note}</span>
-        <div>
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub ↗</a>
+        <nav className="footer-links" aria-label={content.footer.linksLabel}>
           <a href={"mailto:" + EMAIL}>{content.hero.email} ↗</a>
+          <a href={GITHUB_URL} target="_blank" rel="noreferrer">
+            {content.hero.github} ↗
+          </a>
+          <a href={ORCID_URL} target="_blank" rel="noreferrer">
+            {content.hero.orcid} ↗
+          </a>
+          <a href={X_URL} target="_blank" rel="noreferrer">
+            {content.hero.x} ↗
+          </a>
           <a href="#top">{content.footer.top} ↑</a>
-        </div>
+        </nav>
       </footer>
     </>
   );

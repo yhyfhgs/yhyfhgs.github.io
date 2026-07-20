@@ -3,7 +3,7 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 const forbiddenContent =
-  /18958166599|3\.663|\bGPA\b|grade point|课程成绩|语言成绩|绩点|CET-4|GRE 323|Quantitative Finance|reason, adapt, and align|game-theoretic foundations/i;
+  /18958166599|3\.663|\bGPA\b|grade point|课程成绩|语言成绩|绩点|CET-4|GRE 323|Quantitative Finance|reason, adapt, and align|game-theoretic foundations|2FH5GS/i;
 
 async function render(pathname = "/") {
   const normalizedPathname =
@@ -38,7 +38,20 @@ async function renderHtml(pathname) {
   const html = await response.text();
   assert.doesNotMatch(html, forbiddenContent);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|Building your site/);
+  assertProfileFooter(html);
   return html;
+}
+
+function assertProfileFooter(html) {
+  const footer = html.match(/<footer class="site-footer">[\s\S]*?<\/footer>/)?.[0];
+  assert.ok(footer, "Expected the site footer");
+  assert.match(footer, /aria-label="Profile links"/);
+  assert.match(footer, /href="mailto:2501112105@stu\.pku\.edu\.cn"/);
+  assert.match(footer, /href="https:\/\/github\.com\/yhyfhgs"/);
+  assert.match(footer, /href="https:\/\/orcid\.org\/0009-0009-3215-2811"/);
+  assert.match(footer, /href="https:\/\/x\.com\/FHGSYHY"/);
+  assert.match(footer, /href="#top"/);
+  assert.equal((footer.match(/<a /g) ?? []).length, 5);
 }
 
 function articleContaining(html, className, text) {
@@ -84,7 +97,7 @@ test("server-renders the restrained homepage with only source-backed profile con
   assert.match(html, /aria-pressed="true"/);
   assert.match(html, /https:\/\/github\.com\/yhyfhgs/);
   assert.match(html, /https:\/\/orcid\.org\/0009-0009-3215-2811/);
-  assert.match(html, /https:\/\/x\.com\/2FH5GS/);
+  assert.match(html, /https:\/\/x\.com\/FHGSYHY/);
   assert.match(html, /mailto:2501112105@stu\.pku\.edu\.cn/);
   assert.doesNotMatch(html, /ZyphingFHGS/);
   assert.doesNotMatch(html, /Internship|实习/i);
@@ -130,7 +143,7 @@ test("server-renders the restrained homepage with only source-backed profile con
   assert.match(linksSection, /Yuechen Zhu/);
   assert.match(linksSection, /A group is a groupoid with a single object\./);
   assert.doesNotMatch(linksSection, /preview-row-empty/);
-  assert.doesNotMatch(linksSection, /GitHub|ORCID|@2FH5GS|2501112105/);
+  assert.doesNotMatch(linksSection, /GitHub|ORCID|FHGSYHY|2501112105/);
   assert.doesNotMatch(linksSection, /href="\/blog"/);
 });
 
@@ -230,7 +243,7 @@ test("server-renders dedicated blog, friend-links, and reserved academic index p
   assert.match(linksMain, />Visit ↗<\/span>/);
   assert.doesNotMatch(linksMain, /friend-link-domain/);
   assert.doesNotMatch(linksMain, />\s*zzzyc001\.github\.io ↗\s*</);
-  assert.doesNotMatch(linksMain, /GitHub|ORCID|@2FH5GS|2501112105|Peking University/);
+  assert.doesNotMatch(linksMain, /GitHub|ORCID|FHGSYHY|2501112105|Peking University/);
 
   const academic = await renderHtml("/academic");
   assert.match(academic, /<title>Academic Index · Haoyang Ye<\/title>/i);
@@ -285,6 +298,7 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   assert.match(component, /hy-theme/);
   assert.match(component, /github\.com\/yhyfhgs/);
   assert.match(component, /orcid\.org\/0009-0009-3215-2811/);
+  assert.match(component, /x\.com\/FHGSYHY/);
   assert.match(component, /visit: "Visit"/);
   assert.match(component, /visit: "访问主页"/);
   assert.match(component, /PageKey =[\s\S]*"academic"/);
@@ -296,6 +310,7 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   assert.doesNotMatch(component, forbiddenContent);
   assert.match(page, /AcademicSite page="home"/);
   assert.match(layout, /https:\/\/yhyfhgs\.github\.io/);
+  assert.match(layout, /https:\/\/x\.com\/FHGSYHY/);
   assert.match(layout, /application\/ld\+json/);
   assert.doesNotMatch(layout, /Reinforcement Learning Researcher|Ph\.D\. Student/);
   assert.match(css, /:root\[data-theme="dark"\]/);

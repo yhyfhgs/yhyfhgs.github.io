@@ -788,7 +788,7 @@ main,
   font-size: 0.72rem;
 }
 
-.site-footer div {
+.footer-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -913,7 +913,7 @@ button:focus-visible {
     display: block;
   }
 
-  .site-footer div {
+  .footer-links {
     justify-content: flex-start;
     margin-top: 0.75rem;
   }

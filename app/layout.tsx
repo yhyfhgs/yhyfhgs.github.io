@@ -78,7 +78,7 @@ export default function RootLayout({
     sameAs: [
       "https://github.com/yhyfhgs",
       "https://orcid.org/0009-0009-3215-2811",
-      "https://x.com/2FH5GS",
+      "https://x.com/FHGSYHY",
     ],
     knowsAbout: [
       "Reinforcement Learning",
