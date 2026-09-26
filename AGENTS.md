@@ -1,6 +1,6 @@
 # Academic website
 
-`AGENTS.md` is the shared instruction source; `CLAUDE.md` imports it. Read `README.md`. This is Haoyang Ye's English-first bilingual academic profile; `https://yhyfhgs.github.io/` is the canonical public site.
+`AGENTS.md` is the shared instruction source. Read `README.md`. This is Haoyang Ye's English-first bilingual academic profile; `https://yhyfhgs.github.io/` is the canonical public site.
 
 ## Content and publication constraints
 
