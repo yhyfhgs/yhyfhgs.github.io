@@ -402,7 +402,8 @@ test("server-renders dedicated blog, friend-links, and reserved academic index p
   assert.match(linksMain, /A group is a groupoid with a single object\./);
   assert.match(linksMain, /class="friend-link-avatar"/);
   assert.match(linksMain, /src="\/friends\/yuechen-zhu-avatar\.jpg"/);
-  assert.match(linksMain, />Visit ↗<\/span>/);
+  assert.match(linksMain, /class="friend-link-card"/);
+  assert.doesNotMatch(linksMain, /friend-link-action|>Visit ↗</);
   assert.doesNotMatch(linksMain, /friend-link-domain/);
   assert.doesNotMatch(linksMain, />\s*zzzyc001\.github\.io ↗\s*</);
   assert.doesNotMatch(linksMain, /GitHub|ORCID|FHGSYHY|2501112105|Peking University/);
@@ -519,8 +520,7 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   assert.match(component, /github\.com\/yhyfhgs/);
   assert.match(component, /orcid\.org\/0009-0009-3215-2811/);
   assert.match(component, /x\.com\/FHGSYHY/);
-  assert.match(component, /visit: "Visit"/);
-  assert.match(component, /visit: "访问主页"/);
+  assert.doesNotMatch(component, /friend-link-action/);
   assert.match(component, /PageKey =[\s\S]*"academic"/);
   assert.doesNotMatch(component, /hero-role|portrait-frame|content\.hero\.role/);
   assert.doesNotMatch(layout, /haoyang-ye(?:-icon)?\.jpg/);

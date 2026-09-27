@@ -297,7 +297,6 @@ const copy = {
     },
     links: {
       title: "Links",
-      visit: "Visit",
       items: [
         {
           name: "Yuechen Zhu",
@@ -583,7 +582,6 @@ const copy = {
     },
     links: {
       title: "友链",
-      visit: "访问主页",
       items: [
         {
           name: "Yuechen Zhu",
@@ -1314,13 +1312,13 @@ function LinksPage({
     <div id="top" className="subpage narrow-page">
       <Breadcrumbs content={content} language={language} current={content.links.title} />
       <PageHeader title={content.links.title} />
-      <FriendLinksList friends={content.links.items} visitLabel={content.links.visit} />
+      <FriendLinksList friends={content.links.items} />
       <section className="friend-links-group" id="hackthon" aria-labelledby="hackthon-title">
         <header className="friend-links-group-header">
           <h2 id="hackthon-title">{content.links.hackthon.title}</h2>
           <p>{content.links.hackthon.description}</p>
         </header>
-        <FriendLinksList friends={content.links.hackthon.items} visitLabel={content.links.visit} />
+        <FriendLinksList friends={content.links.hackthon.items} />
       </section>
     </div>
   );
@@ -1328,22 +1326,19 @@ function LinksPage({
 
 function FriendLinksList({
   friends,
-  visitLabel,
 }: {
   friends: readonly { name: string; description: string; href: string; avatar?: string }[];
-  visitLabel: string;
 }) {
   return (
     <div className="friend-links-list">
       {friends.map((friend) => (
-        <a
-          className="friend-link"
-          href={friend.href}
-          key={friend.href}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="friend-link-identity">
+        <div className="friend-link-card" key={friend.href}>
+          <a
+            className="friend-link"
+            href={friend.href}
+            target="_blank"
+            rel="noreferrer"
+          >
             {friend.avatar ? (
               // The local avatar is already pre-sized and served as a static asset.
               // eslint-disable-next-line @next/next/no-img-element
@@ -1361,15 +1356,10 @@ function FriendLinksList({
                 {friend.name.slice(0, 1).toUpperCase()}
               </span>
             )}
-            <span className="friend-link-copy">
-              <strong>{friend.name}</strong>
-              <span>{friend.description}</span>
-            </span>
-          </span>
-          <span className="friend-link-action" aria-hidden="true">
-            {`${visitLabel} ↗`}
-          </span>
-        </a>
+            <strong className="friend-link-name">{friend.name}</strong>
+          </a>
+          <p className="friend-link-description">{friend.description}</p>
+        </div>
       ))}
     </div>
   );
