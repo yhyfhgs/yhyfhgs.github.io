@@ -873,10 +873,15 @@ function HomePage({
                   {content.shared.advisor}: {project.advisor}
                 </p>
               )}
-              <p className="item-summary">{project.summary}</p>
-              <ul className="detail-list">
-                {project.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
-              </ul>
+              <details className="research-details">
+                <summary className="research-toggle">{content.shared.contributions}</summary>
+                <div className="research-expanded">
+                  <p className="item-summary">{project.summary}</p>
+                  <ul className="detail-list">
+                    {project.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                  </ul>
+                </div>
+              </details>
               {"slug" in project && (
                 <Link className="text-link" href={researchPath(project.slug, language)}>
                   {content.shared.viewResearch} →

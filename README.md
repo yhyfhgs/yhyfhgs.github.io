@@ -9,6 +9,7 @@ The GitHub Pages site is the canonical public version.
 ## Site contents
 
 - Research experience, education, honors, and source-backed profile details
+- Collapsible homepage Research entries with visible titles and metadata, and a combined methods-and-contributions section that opens on demand
 - Individual research pages for the two ICLR 2027 submissions, with June–September 2026 project periods, authorship, full original abstracts, methods, and Figure 1 from each manuscript
 - Publication index and individual publication pages with official metadata
 - Homepage and footer contact links for email, GitHub, ORCID, and X

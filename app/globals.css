@@ -309,9 +309,64 @@ main,
 }
 
 .research-item + .research-item {
-  margin-top: 4.25rem;
-  padding-top: 4.25rem;
+  margin-top: 2.75rem;
+  padding-top: 2.75rem;
   border-top: 1px solid var(--line);
+}
+
+.research-details {
+  margin-top: 0.8rem;
+}
+
+.research-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 44px;
+  padding-block: 0.6rem;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  list-style: none;
+  cursor: pointer;
+}
+
+.research-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.research-toggle::after {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-right: 0.2rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  flex-shrink: 0;
+  transform: rotate(45deg);
+  transition: transform 160ms ease;
+}
+
+.research-details[open] > .research-toggle::after {
+  transform: rotate(225deg);
+}
+
+.research-toggle:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.22rem;
+}
+
+.research-expanded {
+  padding-bottom: 0.7rem;
+}
+
+.research-expanded .item-summary {
+  margin-top: 0.7rem;
+}
+
+.research-item > .text-link {
+  margin-top: 0.65rem;
 }
 
 .research-meta {
@@ -934,7 +989,8 @@ main,
 }
 
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+summary:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
@@ -1009,8 +1065,8 @@ button:focus-visible {
   }
 
   .research-item + .research-item {
-    margin-top: 3rem;
-    padding-top: 3rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
   }
 
   .subpage {
