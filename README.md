@@ -9,8 +9,10 @@ The GitHub Pages site is the canonical public version.
 ## Site contents
 
 - Research experience, education, honors, and source-backed profile details
+- Individual research pages for the two ICLR 2027 submissions, with June–September 2026 project periods, authorship, full original abstracts, methods, and Figure 1 from each manuscript
 - Publication index and individual publication pages with official metadata
 - Homepage and footer contact links for email, GitHub, ORCID, and X
+- Undergraduate dual-degree, current doctoral study, and advisor details below the homepage research interests
 - Separate Blog, friend-links, and Academic Index pages
 - Crawlable English and Chinese routes with light/dark controls
 - Reserved News, Talks, Teaching, Projects & Software, Service, and CV areas
@@ -33,10 +35,12 @@ GitHub Pages is deployed by the workflow in `.github/workflows/pages.yml` after 
 
 - The public GitHub Pages URL is the canonical origin for every indexable page.
 - English and Simplified Chinese pages have self-canonicals and reciprocal `hreflang` links.
+- Research detail pages use `/research/<slug>/` and `/zh/research/<slug>/`, link from the homepage Research entries, and are included in the sitemap.
 - The sitemap contains only canonical pages with substantive academic content; the empty Blog and Academic Index plus the currently thin Links page remain `noindex, follow`.
 - The homepage publishes `WebSite`, `ProfilePage`, and `Person` JSON-LD.
 - The publication archive publishes `CollectionPage`, `ItemList`, and breadcrumb data.
 - Each paper page publishes `ScholarlyArticle`, breadcrumb data, and Google Scholar-compatible Highwire citation metadata.
+- Submission research pages identify their under-review status in scholarly metadata; they do not claim an acceptance or publication date. Only the extracted figures are included as public assets, not the source manuscripts.
 - Route-specific Open Graph and X Card metadata use a 1200×630 social image.
 
 Google Search Console verification tokens are intentionally not committed. Add them only after the public property is verified by its owner.

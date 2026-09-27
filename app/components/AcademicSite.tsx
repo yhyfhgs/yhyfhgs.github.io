@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { SiOrcid, SiX } from "react-icons/si";
+import { getResearchProject, researchPath, type ResearchSlug } from "../research";
 
 export type Language = "en" | "zh";
 type Theme = "light" | "dark";
 export type PageKey =
   | "home"
+  | "research-beliefs"
+  | "research-readability"
   | "publications"
   | "publication-voting"
   | "publication-icsap"
@@ -25,6 +28,8 @@ const YUECHEN_AVATAR = "/friends/yuechen-zhu-avatar.jpg";
 
 const pageRoutes: Record<PageKey, string> = {
   home: "/",
+  "research-beliefs": researchPath("eliciting-llm-propositional-beliefs", "en"),
+  "research-readability": researchPath("linear-readability-writability", "en"),
   publications: "/publications/",
   "publication-voting":
     "/publications/equilibrium-analysis-network-externalities/",
@@ -65,6 +70,11 @@ const copy = {
       name: "Haoyang Ye",
       description:
         "Research Interests: Reinforcement Learning, LLM post training and Agentic RL",
+      education: [
+        "Undergraduate: Peking University · Information and Computing Science + Economics (dual degree)",
+        "Ph.D. student, School of Computer Science, Peking University",
+        "Advisor: Ruosong Wang (王若松)",
+      ],
       email: "Email",
       github: "GitHub",
       orcid: "ORCID",
@@ -79,6 +89,8 @@ const copy = {
       institution: "Institution",
       researchGroup: "Research group",
       period: "Period",
+      authorship: "Authorship",
+      status: "Status",
       abstract: "Abstract",
       keywords: "Keywords",
       affiliations: "Affiliations",
@@ -87,10 +99,17 @@ const copy = {
       officialResources: "Official resources",
       viewPublication: "View publication",
       backToPublications: "Back to publications",
+      viewResearch: "View research",
+      backToResearch: "Back to research",
+      contributions: "Methods and contributions",
+      viewFigure: "View full-size figure",
+      viewFigureLabel: "View Figure 1 at full size (opens in a new tab)",
     },
     research: {
       title: "Research",
       projects: [
+        getResearchProject("eliciting-llm-propositional-beliefs", "en"),
+        getResearchProject("linear-readability-writability", "en"),
         {
           title: "Optimal Stopping SFT for RL Post-Training",
           institution: "Peking University",
@@ -252,7 +271,7 @@ const copy = {
           school: "Peking University",
           degreeLines: [
             "B.S. in Information and Computing Science",
-            "Double Major in Economics",
+            "Economics (dual degree)",
           ],
           note: "",
         },
@@ -327,6 +346,11 @@ const copy = {
       name: "叶昊洋",
       description:
         "研究方向：Reinforcement Learning, LLM post training and Agentic RL",
+      education: [
+        "本科：北京大学信息与计算科学、经济学双学位",
+        "博士：北京大学计算机学院在读",
+        "导师：Ruosong Wang（王若松）",
+      ],
       email: "邮箱",
       github: "GitHub",
       orcid: "ORCID",
@@ -341,6 +365,8 @@ const copy = {
       institution: "所属机构",
       researchGroup: "课题组",
       period: "时间",
+      authorship: "作者身份",
+      status: "投稿状态",
       abstract: "摘要",
       keywords: "关键词",
       affiliations: "作者机构",
@@ -349,10 +375,17 @@ const copy = {
       officialResources: "官方资源",
       viewPublication: "查看论文",
       backToPublications: "返回论文列表",
+      viewResearch: "查看研究详情",
+      backToResearch: "返回科研经历",
+      contributions: "主要方法与贡献",
+      viewFigure: "查看原图",
+      viewFigureLabel: "查看图 1 原图（在新标签页打开）",
     },
     research: {
       title: "科研经历",
       projects: [
+        getResearchProject("eliciting-llm-propositional-beliefs", "zh"),
+        getResearchProject("linear-readability-writability", "zh"),
         {
           title: "Optimal Stopping SFT for RL Post-Training",
           institution: "北京大学",
@@ -570,6 +603,7 @@ const copy = {
 } as const;
 
 type SiteContent = (typeof copy)[Language];
+type ResearchProject = SiteContent["research"]["projects"][number];
 
 export default function AcademicSite({
   page,
@@ -633,7 +667,12 @@ export default function AcademicSite({
           >
             {content.nav.home}
           </Link>
-          <Link href={localizedHomeAnchor(language, "#research")}>{content.nav.research}</Link>
+          <Link
+            href={localizedHomeAnchor(language, "#research")}
+            aria-current={page.startsWith("research-") ? "location" : undefined}
+          >
+            {content.nav.research}
+          </Link>
           <Link
             href={localizedPath("publications", language)}
             aria-current={publicationsActive ? "page" : undefined}
@@ -704,6 +743,20 @@ export default function AcademicSite({
 
       <main id="main-content" lang={language === "zh" ? "zh-CN" : "en"}>
         {page === "home" && <HomePage content={content} language={language} />}
+        {page === "research-beliefs" && (
+          <ResearchDetailPage
+            content={content}
+            language={language}
+            slug="eliciting-llm-propositional-beliefs"
+          />
+        )}
+        {page === "research-readability" && (
+          <ResearchDetailPage
+            content={content}
+            language={language}
+            slug="linear-readability-writability"
+          />
+        )}
         {page === "publications" && (
           <PublicationsPage content={content} language={language} />
         )}
@@ -762,6 +815,9 @@ function HomePage({
           <p className="kicker">{content.hero.overline}</p>
           <h1>{content.hero.name}</h1>
           <p className="hero-description">{content.hero.description}</p>
+          <div className="hero-education">
+            {content.hero.education.map((line) => <p key={line}>{line}</p>)}
+          </div>
           <div className="contact-row">
             <a className="contact-link" data-contact="email" href={"mailto:" + EMAIL}>
               <MdOutlineEmail aria-hidden="true" focusable="false" />
@@ -806,23 +862,12 @@ function HomePage({
         <div className="section-body research-list">
           {content.research.projects.map((project) => (
             <article className="research-item" key={project.title}>
-              <dl className="research-meta">
-                <div>
-                  <dt>{content.shared.institution}</dt>
-                  <dd className="research-institution">{project.institution}</dd>
-                </div>
-                {project.researchGroup && (
-                  <div>
-                    <dt>{content.shared.researchGroup}</dt>
-                    <dd className="research-group">{project.researchGroup}</dd>
-                  </div>
-                )}
-                <div>
-                  <dt>{content.shared.period}</dt>
-                  <dd><time className="research-time">{project.period}</time></dd>
-                </div>
-              </dl>
-              <h3>{project.title}</h3>
+              <ResearchMetadata content={content} project={project} />
+              <h3>
+                {"slug" in project ? (
+                  <Link href={researchPath(project.slug, language)}>{project.title}</Link>
+                ) : project.title}
+              </h3>
               {project.advisor && (
                 <p className="advisor">
                   {content.shared.advisor}: {project.advisor}
@@ -832,6 +877,11 @@ function HomePage({
               <ul className="detail-list">
                 {project.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
               </ul>
+              {"slug" in project && (
+                <Link className="text-link" href={researchPath(project.slug, language)}>
+                  {content.shared.viewResearch} →
+                </Link>
+              )}
             </article>
           ))}
         </div>
@@ -925,6 +975,119 @@ function HomePage({
         </div>
       </section>
     </div>
+  );
+}
+
+function ResearchMetadata({
+  content,
+  project,
+}: {
+  content: SiteContent;
+  project: ResearchProject;
+}) {
+  return (
+    <dl className="research-meta">
+      <div>
+        <dt>{content.shared.institution}</dt>
+        <dd className="research-institution">{project.institution}</dd>
+      </div>
+      {project.researchGroup && (
+        <div>
+          <dt>{content.shared.researchGroup}</dt>
+          <dd className="research-group">{project.researchGroup}</dd>
+        </div>
+      )}
+      {project.period && (
+        <div>
+          <dt>{content.shared.period}</dt>
+          <dd><time className="research-time">{project.period}</time></dd>
+        </div>
+      )}
+      {"authorship" in project && (
+        <div>
+          <dt>{content.shared.authorship}</dt>
+          <dd className="research-authorship">{project.authorship}</dd>
+        </div>
+      )}
+      {"status" in project && (
+        <div>
+          <dt>{content.shared.status}</dt>
+          <dd className="research-status">{project.status}</dd>
+        </div>
+      )}
+    </dl>
+  );
+}
+
+function ResearchDetailPage({
+  content,
+  language,
+  slug,
+}: {
+  content: SiteContent;
+  language: Language;
+  slug: ResearchSlug;
+}) {
+  const project = getResearchProject(slug, language);
+  const researchHref = localizedHomeAnchor(language, "#research");
+
+  return (
+    <article id="top" className="subpage research-detail-page">
+      <Breadcrumbs
+        content={content}
+        language={language}
+        current={project.title}
+        parent={{ label: content.research.title, href: researchHref }}
+      />
+      <Link className="back-link" href={researchHref}>
+        ← {content.shared.backToResearch}
+      </Link>
+      <header className="publication-detail-header">
+        <h1>{project.title}</h1>
+        <p className="authors">
+          <span>{content.shared.authors}</span>
+          {project.authors.join(", ")}
+        </p>
+      </header>
+      <ResearchMetadata content={content} project={project} />
+      <p className="research-detail-summary">{project.summary}</p>
+
+      <figure className="research-figure">
+        <a
+          className="research-figure-image"
+          href={project.figure.src}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={content.shared.viewFigureLabel}
+        >
+          {/* Static figure assets preserve the original paper artwork on GitHub Pages. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={project.figure.src}
+            alt={project.figureAlt}
+            width={project.figure.width}
+            height={project.figure.height}
+            decoding="async"
+          />
+        </a>
+        <figcaption>
+          <p>{project.figureCaption}</p>
+          <a href={project.figure.src} target="_blank" rel="noreferrer">
+            {content.shared.viewFigure} ↗
+          </a>
+        </figcaption>
+      </figure>
+
+      <PublicationSection title={content.shared.abstract}>
+        <p className="research-abstract" lang="en">{project.abstract}</p>
+      </PublicationSection>
+
+      <PublicationSection title={content.shared.contributions}>
+        <ul className="detail-list">
+          {project.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+        </ul>
+      </PublicationSection>
+    </article>
   );
 }
 

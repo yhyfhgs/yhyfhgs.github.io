@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { JsonLdValue } from "./components/JsonLd";
+import { getResearchProject, researchPath, type ResearchSlug } from "./research";
 
 export type SiteLanguage = "en" | "zh";
 export type PublicationSlug =
@@ -471,6 +472,67 @@ export function simplePageMetadata(
     zhPath: `/zh${enPath}`,
     index: false,
   });
+}
+
+export function researchMetadata(slug: ResearchSlug, language: SiteLanguage): Metadata {
+  const project = getResearchProject(slug, language);
+  return createPageMetadata({
+    language,
+    title: `${project.title} · ${language === "zh" ? "叶昊洋" : "Haoyang Ye"}`,
+    description: `${project.summary} ${project.status}.`,
+    enPath: researchPath(slug, "en"),
+    zhPath: researchPath(slug, "zh"),
+    type: "article",
+    authors: [...project.authors],
+    other: {
+      citation_title: project.title,
+      citation_author: [...project.authors],
+      citation_language: "en",
+      citation_abstract_html_url: absoluteUrl(researchPath(slug, language)),
+    },
+  });
+}
+
+export function researchJsonLd(slug: ResearchSlug, language: SiteLanguage): JsonLdValue {
+  const project = getResearchProject(slug, language);
+  const pageUrl = absoluteUrl(researchPath(slug, language));
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ScholarlyArticle",
+        "@id": `${pageUrl}#article`,
+        url: pageUrl,
+        mainEntityOfPage: pageUrl,
+        headline: project.title,
+        description: project.summary,
+        abstract: project.abstract,
+        inLanguage: "en",
+        creativeWorkStatus: "Under review at ICLR 2027",
+        author: project.authors.map((name) => ({
+          "@type": "Person",
+          name,
+          ...(name === "Haoyang Ye" ? { "@id": PERSON_ID, url: `${SITE_URL}/` } : {}),
+        })),
+        image: {
+          "@type": "ImageObject",
+          contentUrl: absoluteUrl(project.figure.src),
+          width: project.figure.width,
+          height: project.figure.height,
+          caption: project.figureCaption,
+        },
+        breadcrumb: { "@id": breadcrumbId },
+      },
+      breadcrumbJsonLd(breadcrumbId, language, [
+        {
+          name: language === "zh" ? "科研经历" : "Research",
+          url: `${SITE_URL}${language === "zh" ? "/zh/" : "/"}#research`,
+        },
+        { name: project.title, url: pageUrl },
+      ]),
+    ],
+  };
 }
 
 export function publicationMetadata(

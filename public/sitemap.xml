@@ -5,14 +5,14 @@
 >
   <url>
     <loc>https://yhyfhgs.github.io/</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/" />
   </url>
   <url>
     <loc>https://yhyfhgs.github.io/zh/</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/" />
@@ -58,5 +58,33 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/publications/incentive-compatibility-ai-alignment/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/publications/incentive-compatibility-ai-alignment/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/publications/incentive-compatibility-ai-alignment/" />
+  </url>
+  <url>
+    <loc>https://yhyfhgs.github.io/research/eliciting-llm-propositional-beliefs/</loc>
+    <lastmod>2026-09-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/research/eliciting-llm-propositional-beliefs/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/research/eliciting-llm-propositional-beliefs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/research/eliciting-llm-propositional-beliefs/" />
+  </url>
+  <url>
+    <loc>https://yhyfhgs.github.io/zh/research/eliciting-llm-propositional-beliefs/</loc>
+    <lastmod>2026-09-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/research/eliciting-llm-propositional-beliefs/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/research/eliciting-llm-propositional-beliefs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/research/eliciting-llm-propositional-beliefs/" />
+  </url>
+  <url>
+    <loc>https://yhyfhgs.github.io/research/linear-readability-writability/</loc>
+    <lastmod>2026-09-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/research/linear-readability-writability/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/research/linear-readability-writability/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/research/linear-readability-writability/" />
+  </url>
+  <url>
+    <loc>https://yhyfhgs.github.io/zh/research/linear-readability-writability/</loc>
+    <lastmod>2026-09-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/research/linear-readability-writability/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/research/linear-readability-writability/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/research/linear-readability-writability/" />
   </url>
 </urlset>

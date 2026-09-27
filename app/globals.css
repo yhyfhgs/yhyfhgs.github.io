@@ -138,11 +138,13 @@ button {
 
 .main-nav a:hover,
 .main-nav a:focus-visible,
-.main-nav a[aria-current="page"] {
+.main-nav a[aria-current="page"],
+.main-nav a[aria-current="location"] {
   color: var(--ink);
 }
 
-.main-nav a[aria-current="page"] {
+.main-nav a[aria-current="page"],
+.main-nav a[aria-current="location"] {
   text-decoration: underline;
   text-decoration-color: var(--accent);
   text-underline-offset: 0.34rem;
@@ -219,6 +221,21 @@ main,
   margin: 1.5rem 0 0;
   color: var(--ink-soft);
   font-size: 1.05rem;
+}
+
+.hero-education {
+  margin-top: 1.15rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.hero-education p {
+  margin: 0;
+}
+
+.hero-education p + p {
+  margin-top: 0.3rem;
 }
 
 .contact-row {
@@ -418,7 +435,9 @@ main,
 }
 
 .compact-list h3 a:hover,
-.compact-list h3 a:focus-visible {
+.compact-list h3 a:focus-visible,
+.research-item h3 a:hover,
+.research-item h3 a:focus-visible {
   color: var(--accent);
 }
 
@@ -600,8 +619,61 @@ main,
   margin-top: 1.45rem;
 }
 
-.publication-detail-page {
+.publication-detail-page,
+.research-detail-page {
   width: min(100%, 50rem);
+}
+
+.research-detail-page > .research-meta {
+  margin-top: 1.75rem;
+}
+
+.research-detail-summary {
+  margin: 2rem 0;
+  font-size: 1.12rem;
+}
+
+.research-figure {
+  margin: 2.5rem 0 0;
+}
+
+.research-figure-image {
+  display: block;
+  padding: clamp(0.4rem, 1.5vw, 1rem);
+  border: 1px solid var(--line-strong);
+  background: #ffffff;
+  cursor: zoom-in;
+}
+
+.research-figure-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.research-figure figcaption {
+  margin-top: 1rem;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.research-figure figcaption p {
+  margin: 0;
+}
+
+.research-figure figcaption a {
+  display: inline-block;
+  margin-top: 0.65rem;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.research-detail-page .detail-list {
+  margin-top: 0;
 }
 
 .back-link {

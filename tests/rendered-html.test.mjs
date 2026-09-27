@@ -143,7 +143,7 @@ test("server-renders the restrained homepage with only source-backed profile con
   const undergraduate = articleContaining(html, "education-item", "Sept 2021 - June 2025");
   assert.match(
     undergraduate,
-    /<p>B\.S\. in Information and Computing Science<\/p>\s*<p>Double Major in Economics<\/p>/,
+    /<p>B\.S\. in Information and Computing Science<\/p>\s*<p>Economics \(dual degree\)<\/p>/,
   );
 
   const blogSection = sectionById(html, "blog-preview");
@@ -159,6 +159,49 @@ test("server-renders the restrained homepage with only source-backed profile con
   assert.doesNotMatch(linksSection, /preview-row-empty/);
   assert.doesNotMatch(linksSection, /GitHub|ORCID|FHGSYHY|2501112105/);
   assert.doesNotMatch(linksSection, /href="\/blog\/"/);
+});
+
+test("links bilingual research timelines to detail pages with original figures and submission metadata", async () => {
+  const projects = [
+    { slug: "eliciting-llm-propositional-beliefs", authorIndex: 0 },
+    { slug: "linear-readability-writability", authorIndex: 1 },
+  ];
+
+  for (const language of ["en", "zh"]) {
+    const homePath = language === "zh" ? "/zh/" : "/";
+    const home = await renderHtml(homePath);
+    const period = language === "zh" ? "2026.6 - 2026.9" : "June 2026 - Sept 2026";
+    for (const { slug, authorIndex } of projects) {
+      const path = `${homePath}research/${slug}/`;
+      const assetPath = `/research/${slug}-figure-1.png`;
+      const project = articleContaining(home, "research-item", `href="${path}"`);
+      assert.ok(project.includes(`<time class="research-time">${period}</time>`));
+
+      const detail = await renderHtml(path);
+      assert.equal((mainContent(detail).match(/<h1(?:\s|>)/g) ?? []).length, 1);
+      assert.ok(detail.includes(`<time class="research-time">${period}</time>`));
+      assert.ok(detail.includes(`href="${homePath}#research"`));
+      assert.match(detail, /Under review at ICLR 2027|ICLR 2027 在投/);
+      assert.ok(detail.includes(`href="/research/${slug}/"`));
+      assert.ok(detail.includes(`href="/zh/research/${slug}/"`));
+      assert.match(detail, /<figure class="research-figure">[\s\S]*?<figcaption>/);
+      assert.ok(detail.includes(`<img src="${assetPath}" alt="`));
+
+      const png = await readFile(new URL(`../dist/client${assetPath}`, import.meta.url));
+      assert.equal(png.readUInt32BE(16), 2000);
+      assert.ok(detail.includes(`width="${png.readUInt32BE(16)}" height="${png.readUInt32BE(20)}"`));
+      await access(new URL(`../dist/client${path}index.html`, import.meta.url));
+
+      const article = jsonLdGraphs(detail)[0]["@graph"].find((item) => item["@type"] === "ScholarlyArticle");
+      assert.equal(article.author[authorIndex].name, "Haoyang Ye");
+      assert.equal(article.creativeWorkStatus, "Under review at ICLR 2027");
+      assert.equal(article.datePublished, undefined);
+      assert.equal(article.image.contentUrl, `https://yhyfhgs.github.io${assetPath}`);
+      assert.equal(metaContents(detail, "citation_author")[authorIndex], "Haoyang Ye");
+      assert.deepEqual(metaContents(detail, "citation_publication_date"), []);
+      assert.deepEqual(metaContents(detail, "citation_conference_title"), []);
+    }
+  }
 });
 
 test("publishes consistent canonical, hreflang, social, and profile metadata", async () => {
@@ -382,7 +425,7 @@ test("keeps heading hierarchy, canonical trailing slashes, and sitemap indexabil
   assert.ok((home.match(/<h2(?:\s|>)/g) ?? []).length >= 6);
   assert.ok((home.match(/<h3(?:\s|>)/g) ?? []).length >= 8);
   const internalDirectoryLinks = [
-    ...mainContent(home).matchAll(/href="(\/(?:publications|blog|links)[^"#]*)"/g),
+    ...mainContent(home).matchAll(/href="(\/(?:research|publications|blog|links)[^"#]*)"/g),
   ].map((match) => match[1]);
   for (const href of internalDirectoryLinks) {
     assert.ok(href.endsWith("/"), `${href} should use a trailing slash`);
@@ -395,7 +438,7 @@ test("keeps heading hierarchy, canonical trailing slashes, and sitemap indexabil
   const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
     (match) => match[1],
   );
-  assert.equal(sitemapUrls.length, 8);
+  assert.equal(sitemapUrls.length, 12);
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
 
   for (const url of sitemapUrls) {
