@@ -306,6 +306,17 @@ const copy = {
           avatar: YUECHEN_AVATAR,
         },
       ],
+      hackthon: {
+        title: "Hackthon",
+        description: "Friends I met at hackathons.",
+        items: [
+          {
+            name: "ailiheizi (刘志)",
+            description: "Agent engineering and full-stack development.",
+            href: "https://me.alhz.org/",
+          },
+        ],
+      },
     },
     academic: {
       title: "Academic Index",
@@ -581,6 +592,17 @@ const copy = {
           avatar: YUECHEN_AVATAR,
         },
       ],
+      hackthon: {
+        title: "Hackthon",
+        description: "通过黑客松认识的好友。",
+        items: [
+          {
+            name: "刘志（ailiheizi）",
+            description: "Agent 工程与全栈开发。",
+            href: "https://me.alhz.org/",
+          },
+        ],
+      },
     },
     academic: {
       title: "学术索引",
@@ -977,6 +999,15 @@ function HomePage({
             </span>
             <em>{content.shared.openPage} →</em>
           </Link>
+          <Link
+            className="preview-row"
+            href={`${localizedPath("links", language)}#hackthon`}
+          >
+            <span>
+              {content.links.hackthon.title} · {content.links.hackthon.items.map((friend) => friend.name).join(", ")}
+            </span>
+            <em>{content.shared.openPage} →</em>
+          </Link>
         </div>
       </section>
     </div>
@@ -1283,18 +1314,39 @@ function LinksPage({
     <div id="top" className="subpage narrow-page">
       <Breadcrumbs content={content} language={language} current={content.links.title} />
       <PageHeader title={content.links.title} />
-      <div className="friend-links-list">
-        {content.links.items.map((friend) => (
-          <a
-            className="friend-link"
-            href={friend.href}
-            key={friend.href}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span className="friend-link-identity">
-              {/* The local avatar is already pre-sized and served as a static asset. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+      <FriendLinksList friends={content.links.items} visitLabel={content.links.visit} />
+      <section className="friend-links-group" id="hackthon" aria-labelledby="hackthon-title">
+        <header className="friend-links-group-header">
+          <h2 id="hackthon-title">{content.links.hackthon.title}</h2>
+          <p>{content.links.hackthon.description}</p>
+        </header>
+        <FriendLinksList friends={content.links.hackthon.items} visitLabel={content.links.visit} />
+      </section>
+    </div>
+  );
+}
+
+function FriendLinksList({
+  friends,
+  visitLabel,
+}: {
+  friends: readonly { name: string; description: string; href: string; avatar?: string }[];
+  visitLabel: string;
+}) {
+  return (
+    <div className="friend-links-list">
+      {friends.map((friend) => (
+        <a
+          className="friend-link"
+          href={friend.href}
+          key={friend.href}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="friend-link-identity">
+            {friend.avatar ? (
+              // The local avatar is already pre-sized and served as a static asset.
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 className="friend-link-avatar"
                 src={friend.avatar}
@@ -1304,17 +1356,21 @@ function LinksPage({
                 loading="lazy"
                 decoding="async"
               />
-              <span className="friend-link-copy">
-                <strong>{friend.name}</strong>
-                <span>{friend.description}</span>
+            ) : (
+              <span className="friend-link-avatar friend-link-initial" aria-hidden="true">
+                {friend.name.slice(0, 1).toUpperCase()}
               </span>
+            )}
+            <span className="friend-link-copy">
+              <strong>{friend.name}</strong>
+              <span>{friend.description}</span>
             </span>
-            <span className="friend-link-action" aria-hidden="true">
-              {`${content.links.visit} ↗`}
-            </span>
-          </a>
-        ))}
-      </div>
+          </span>
+          <span className="friend-link-action" aria-hidden="true">
+            {`${visitLabel} ↗`}
+          </span>
+        </a>
+      ))}
     </div>
   );
 }

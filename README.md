@@ -15,6 +15,7 @@ The GitHub Pages site is the canonical public version.
 - Homepage and footer contact links for email, GitHub, ORCID, and X
 - Undergraduate dual-degree, current doctoral study, and advisor details below the homepage research interests
 - Separate Blog, friend-links, and Academic Index pages
+- A Hackthon group on the friend-links page for friends met at hackathons, with a direct homepage link
 - Crawlable English and Chinese routes with light/dark controls
 - Reserved News, Talks, Teaching, Projects & Software, Service, and CV areas
 
