@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+// Run synchronously before the body is parsed, including on static Pages loads.
+const themeBootstrap = `(function(){var theme;try{theme=localStorage.getItem("hy-theme")}catch(e){}if(theme!=="light"&&theme!=="dark"){theme=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme})()`;
+
 const siteUrl = "https://yhyfhgs.github.io";
 
 export const metadata: Metadata = {
@@ -47,6 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script id="theme-bootstrap" dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+      </head>
       <body>{children}</body>
     </html>
   );

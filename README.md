@@ -12,7 +12,7 @@ The GitHub Pages site is the canonical public version.
 - Owner-supplied homepage portrait on both English and Chinese routes
 - Collapsible homepage Research entries with visible titles and metadata, and a combined methods-and-contributions section that opens on demand
 - Dedicated bilingual Research indexes at `/research/` and `/zh/research/`, linked from navigation and detail-page breadcrumbs
-- Shared 54rem content width and header spacing across sections and detail pages; Links retains its compact layout
+- Shared 54rem content width and header spacing across all sections (including Links) and detail pages
 - Individual research pages for the two ICLR 2027 submissions, with June–September 2026 project periods, authorship, full original abstracts, methods, and Figure 1 from each manuscript
 - Publication index and individual publication pages with official metadata
 - Homepage and footer contact links for email, GitHub, ORCID, and X

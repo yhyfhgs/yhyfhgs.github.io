@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
+import { runInNewContext } from "node:vm";
 
 const forbiddenContent =
   /18958166599|3\.663|\bGPA\b|grade point|课程成绩|语言成绩|绩点|CET-4|GRE 323|Quantitative Finance|reason, adapt, and align|game-theoretic foundations|2FH5GS/i;
@@ -581,5 +582,32 @@ test("serves bilingual research indexes with navigation, detail links and canoni
     assert.ok(main.includes(`href="${path}linear-readability-writability/"`));
     assert.match(main, /Optimal Stopping SFT/);
     assert.match(main, /daGAME Lab/);
+  }
+});
+
+
+test("restores the theme before body rendering without waiting for hydration", async () => {
+  for (const path of ["/", "/research/", "/publications/", "/blog/", "/zh/research/", "/zh/publications/", "/zh/blog/", "/links/", "/zh/links/"]) {
+    const html = await readFile(new URL(`../dist/client${path}index.html`, import.meta.url), "utf8");
+    const match = /<script id="theme-bootstrap">([\s\S]*?)<\/script>/.exec(html);
+    assert.ok(match, `Missing theme bootstrap on ${path}`);
+    assert.ok(match.index < html.indexOf("</head>"));
+    assert.ok(match.index < html.indexOf("<body"));
+    for (const [saved, systemDark, blocked, expected] of [
+      ["dark", false, false, "dark"],
+      ["light", true, false, "light"],
+      [null, true, false, "dark"],
+      ["invalid", false, false, "light"],
+      [null, true, true, "dark"],
+    ]) {
+      const root = { dataset: {}, style: {} };
+      runInNewContext(match[1], {
+        document: { documentElement: root },
+        localStorage: { getItem() { if (blocked) throw new Error("Storage blocked"); return saved; } },
+        matchMedia: () => ({ matches: systemDark }),
+      });
+      assert.equal(root.dataset.theme, expected);
+      assert.equal(root.style.colorScheme, expected);
+    }
   }
 });

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { FaGithub } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { SiOrcid, SiX } from "react-icons/si";
@@ -623,6 +623,19 @@ const copy = {
 type SiteContent = (typeof copy)[Language];
 type ResearchProject = SiteContent["research"]["projects"][number];
 
+function subscribeTheme(onChange: () => void) {
+  window.addEventListener("hy-theme-change", onChange);
+  return () => window.removeEventListener("hy-theme-change", onChange);
+}
+
+function readTheme(): Theme {
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+}
+
+function serverTheme(): Theme {
+  return "light";
+}
+
 export default function AcademicSite({
   page,
   initialLanguage = "en",
@@ -631,32 +644,19 @@ export default function AcademicSite({
   initialLanguage?: Language;
 }) {
   const language = initialLanguage;
-  const [theme, setTheme] = useState<Theme>("light");
+  const theme = useSyncExternalStore(subscribeTheme, readTheme, serverTheme);
   const content = copy[language];
   const publicationsActive = page === "publications" || page.startsWith("publication-");
 
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      const savedTheme = window.localStorage.getItem("hy-theme");
-      const preferredTheme: Theme =
-        savedTheme === "light" || savedTheme === "dark"
-          ? savedTheme
-          : window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
-      setTheme(preferredTheme);
-      document.documentElement.dataset.theme = preferredTheme;
-      document.documentElement.style.colorScheme = preferredTheme;
-    });
-
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
-
   const selectTheme = (nextTheme: Theme) => {
-    setTheme(nextTheme);
-    window.localStorage.setItem("hy-theme", nextTheme);
     document.documentElement.dataset.theme = nextTheme;
     document.documentElement.style.colorScheme = nextTheme;
+    try {
+      window.localStorage.setItem("hy-theme", nextTheme);
+    } catch {
+      // Theme switching still works when browser storage is unavailable.
+    }
+    window.dispatchEvent(new Event("hy-theme-change"));
   };
 
   return (
@@ -1346,7 +1346,7 @@ function LinksPage({
   language: Language;
 }) {
   return (
-    <div id="top" className="subpage narrow-page">
+    <div id="top" className="subpage">
       <Breadcrumbs content={content} language={language} current={content.links.title} />
       <PageHeader title={content.links.title} />
       <FriendLinksList friends={content.links.items} />
