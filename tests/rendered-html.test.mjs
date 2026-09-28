@@ -180,7 +180,7 @@ test("links bilingual research timelines to detail pages with original figures a
       const detail = await renderHtml(path);
       assert.equal((mainContent(detail).match(/<h1(?:\s|>)/g) ?? []).length, 1);
       assert.ok(detail.includes(`<time class="research-time">${period}</time>`));
-      assert.ok(detail.includes(`href="${homePath}#research"`));
+      assert.ok(detail.includes(`href="${homePath}research/"`));
       assert.match(detail, /Under review at ICLR 2027|ICLR 2027 在投/);
       assert.ok(detail.includes(`href="/research/${slug}/"`));
       assert.ok(detail.includes(`href="/zh/research/${slug}/"`));
@@ -440,7 +440,7 @@ test("keeps heading hierarchy, canonical trailing slashes, and sitemap indexabil
   const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
     (match) => match[1],
   );
-  assert.equal(sitemapUrls.length, 12);
+  assert.equal(sitemapUrls.length, 14);
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
 
   for (const url of sitemapUrls) {
@@ -562,4 +562,24 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   await assert.rejects(access(new URL("../public/haoyang-ye-icon.jpg", import.meta.url)));
   await access(new URL("../dist/client/haoyang-ye.jpg", import.meta.url));
   await assert.rejects(access(new URL("../dist/client/haoyang-ye-icon.jpg", import.meta.url)));
+});
+
+
+test("serves bilingual research indexes with navigation, detail links and canonical metadata", async () => {
+  for (const prefix of ["", "/zh"]) {
+    const path = `${prefix}/research/`;
+    const html = await renderHtml(path);
+    const main = mainContent(html);
+    assert.equal((main.match(/<h1(?:\s|>)/g) ?? []).length, 1);
+    assert.equal((main.match(/<h2(?:\s|>)/g) ?? []).length, 4);
+    assert.equal((main.match(/class="research-item"/g) ?? []).length, 4);
+    assert.ok(html.includes(`href="${path}" aria-current="page"`));
+    assert.ok(html.includes(`<link rel="canonical" href="https://yhyfhgs.github.io${path}"`));
+    assert.ok(html.includes('hrefLang="en" href="https://yhyfhgs.github.io/research/"'));
+    assert.ok(html.includes('hrefLang="zh-Hans" href="https://yhyfhgs.github.io/zh/research/"'));
+    assert.ok(main.includes(`href="${path}eliciting-llm-propositional-beliefs/"`));
+    assert.ok(main.includes(`href="${path}linear-readability-writability/"`));
+    assert.match(main, /Optimal Stopping SFT/);
+    assert.match(main, /daGAME Lab/);
+  }
 });

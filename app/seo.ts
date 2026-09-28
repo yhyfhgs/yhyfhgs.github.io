@@ -527,7 +527,7 @@ export function researchJsonLd(slug: ResearchSlug, language: SiteLanguage): Json
       breadcrumbJsonLd(breadcrumbId, language, [
         {
           name: language === "zh" ? "科研经历" : "Research",
-          url: `${SITE_URL}${language === "zh" ? "/zh/" : "/"}#research`,
+          url: localizedPage(language, "/research/", "/zh/research/"),
         },
         { name: project.title, url: pageUrl },
       ]),
@@ -700,5 +700,35 @@ function breadcrumbJsonLd(
         item: item.url,
       }),
     ),
+  };
+}
+
+export function researchIndexMetadata(language: SiteLanguage): Metadata {
+  return createPageMetadata({
+    language,
+    title: language === "zh" ? "科研 · 叶昊洋" : "Research · Haoyang Ye",
+    description: language === "zh" ? "叶昊洋的科研经历：强化学习、大语言模型后训练、智能体信念评估与机制设计。" : "Research projects by Haoyang Ye on reinforcement learning, LLM post-training, agent beliefs, and mechanism design.",
+    enPath: "/research/",
+    zhPath: "/zh/research/",
+  });
+}
+
+export function researchIndexJsonLd(language: SiteLanguage): JsonLdValue {
+  const url = localizedPage(language, "/research/", "/zh/research/");
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": url,
+        url,
+        name: language === "zh" ? "科研" : "Research",
+        inLanguage: language === "zh" ? "zh-Hans" : "en",
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": PERSON_ID },
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+      },
+      breadcrumbJsonLd(`${url}#breadcrumb`, language, [{ name: language === "zh" ? "科研" : "Research", url }]),
+    ],
   };
 }

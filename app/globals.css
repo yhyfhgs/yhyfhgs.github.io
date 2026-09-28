@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  --content-width: 54rem;
   --paper: #ffffff;
   --ink: #282828;
   --ink-soft: #676767;
@@ -30,6 +31,7 @@
 
 html {
   background: var(--paper);
+  scrollbar-gutter: stable;
   scroll-behavior: smooth;
   scroll-padding-top: 8rem;
 }
@@ -191,7 +193,7 @@ main,
   grid-template-columns: 11rem minmax(0, 1fr);
   gap: 2.25rem;
   align-items: start;
-  max-width: 54rem;
+  max-width: var(--content-width);
   margin-inline: auto;
   padding-block: clamp(5.5rem, 11vw, 8rem);
 }
@@ -296,7 +298,7 @@ main,
   display: grid;
   grid-template-columns: 11rem minmax(0, 1fr);
   gap: 2.25rem;
-  max-width: 54rem;
+  max-width: var(--content-width);
   margin-inline: auto;
   padding-block: clamp(2.75rem, 6vw, 3.75rem);
 }
@@ -418,6 +420,7 @@ main,
   line-height: 1.5;
 }
 
+.research-item h2,
 .research-item h3,
 .compact-list h3,
 .publication-item h2 {
@@ -501,6 +504,8 @@ main,
 
 .compact-list h3 a:hover,
 .compact-list h3 a:focus-visible,
+.research-item h2 a:hover,
+.research-item h2 a:focus-visible,
 .research-item h3 a:hover,
 .research-item h3 a:focus-visible {
   color: var(--accent);
@@ -538,7 +543,7 @@ main,
 }
 
 .subpage {
-  width: min(100%, 45rem);
+  width: min(100%, var(--content-width));
   min-height: calc(100vh - 13rem);
   margin-inline: auto;
   padding: clamp(5.5rem, 10vw, 8rem) 0 8rem;
@@ -684,11 +689,6 @@ main,
 
 .publication-item .text-link {
   margin-top: 1.45rem;
-}
-
-.publication-detail-page,
-.research-detail-page {
-  width: min(100%, 50rem);
 }
 
 .research-detail-page > .research-meta {
@@ -1183,4 +1183,8 @@ summary:focus-visible {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.research-index > .research-list {
+  padding-top: 1.5rem;
 }

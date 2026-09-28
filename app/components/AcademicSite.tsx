@@ -11,6 +11,7 @@ export type Language = "en" | "zh";
 type Theme = "light" | "dark";
 export type PageKey =
   | "home"
+  | "research"
   | "research-beliefs"
   | "research-readability"
   | "publications"
@@ -28,6 +29,7 @@ const YUECHEN_AVATAR = "/friends/yuechen-zhu-avatar.jpg";
 
 const pageRoutes: Record<PageKey, string> = {
   home: "/",
+  research: "/research/",
   "research-beliefs": researchPath("eliciting-llm-propositional-beliefs", "en"),
   "research-readability": researchPath("linear-readability-writability", "en"),
   publications: "/publications/",
@@ -42,10 +44,6 @@ const pageRoutes: Record<PageKey, string> = {
 function localizedPath(page: PageKey, language: Language) {
   const path = pageRoutes[page];
   return language === "en" ? path : path === "/" ? "/zh/" : `/zh${path}`;
-}
-
-function localizedHomeAnchor(language: Language, anchor: string) {
-  return `${localizedPath("home", language)}${anchor}`;
 }
 
 const copy = {
@@ -688,8 +686,8 @@ export default function AcademicSite({
             {content.nav.home}
           </Link>
           <Link
-            href={localizedHomeAnchor(language, "#research")}
-            aria-current={page.startsWith("research-") ? "location" : undefined}
+            href={localizedPath("research", language)}
+            aria-current={page === "research" || page.startsWith("research-") ? "page" : undefined}
           >
             {content.nav.research}
           </Link>
@@ -763,6 +761,7 @@ export default function AcademicSite({
 
       <main id="main-content" lang={language === "zh" ? "zh-CN" : "en"}>
         {page === "home" && <HomePage content={content} language={language} />}
+        {page === "research" && <ResearchPage content={content} language={language} />}
         {page === "research-beliefs" && (
           <ResearchDetailPage
             content={content}
@@ -890,35 +889,10 @@ function HomePage({
       <section className="home-section" id="research">
         <SectionLabel title={content.research.title} />
         <div className="section-body research-list">
-          {content.research.projects.map((project) => (
-            <article className="research-item" key={project.title}>
-              <ResearchMetadata content={content} project={project} />
-              <h3>
-                {"slug" in project ? (
-                  <Link href={researchPath(project.slug, language)}>{project.title}</Link>
-                ) : project.title}
-              </h3>
-              {project.advisor && (
-                <p className="advisor">
-                  {content.shared.advisor}: {project.advisor}
-                </p>
-              )}
-              <details className="research-details">
-                <summary className="research-toggle">{content.shared.contributions}</summary>
-                <div className="research-expanded">
-                  <p className="item-summary">{project.summary}</p>
-                  <ul className="detail-list">
-                    {project.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
-                  </ul>
-                </div>
-              </details>
-              {"slug" in project && (
-                <Link className="text-link" href={researchPath(project.slug, language)}>
-                  {content.shared.viewResearch} →
-                </Link>
-              )}
-            </article>
-          ))}
+          <ResearchList content={content} language={language} />
+          <Link className="text-link" href={localizedPath("research", language)}>
+            {language === "zh" ? "全部科研经历" : "All research"} →
+          </Link>
         </div>
       </section>
 
@@ -1063,6 +1037,59 @@ function ResearchMetadata({
   );
 }
 
+function ResearchList({ content, language, headingLevel = 3 }: {
+  content: SiteContent;
+  language: Language;
+  headingLevel?: 2 | 3;
+}) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
+  return (
+    <>
+      {content.research.projects.map((project) => (
+        <article className="research-item" key={project.title}>
+          <ResearchMetadata content={content} project={project} />
+          <Heading>
+            {"slug" in project ? (
+              <Link href={researchPath(project.slug, language)}>{project.title}</Link>
+            ) : project.title}
+          </Heading>
+          {project.advisor && (
+            <p className="advisor">
+              {content.shared.advisor}: {project.advisor}
+            </p>
+          )}
+          <details className="research-details">
+            <summary className="research-toggle">{content.shared.contributions}</summary>
+            <div className="research-expanded">
+              <p className="item-summary">{project.summary}</p>
+              <ul className="detail-list">
+                {project.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+              </ul>
+            </div>
+          </details>
+          {"slug" in project && (
+            <Link className="text-link" href={researchPath(project.slug, language)}>
+              {content.shared.viewResearch} →
+            </Link>
+          )}
+        </article>
+      ))}
+    </>
+  );
+}
+
+function ResearchPage({ content, language }: { content: SiteContent; language: Language }) {
+  return (
+    <div id="top" className="subpage research-index">
+      <Breadcrumbs content={content} language={language} current={content.nav.research} />
+      <PageHeader title={content.nav.research} meta={language === "zh" ? `${content.research.projects.length} 项科研经历` : `${content.research.projects.length} research projects`} />
+      <div className="research-list">
+        <ResearchList content={content} language={language} headingLevel={2} />
+      </div>
+    </div>
+  );
+}
+
 function ResearchDetailPage({
   content,
   language,
@@ -1073,7 +1100,7 @@ function ResearchDetailPage({
   slug: ResearchSlug;
 }) {
   const project = getResearchProject(slug, language);
-  const researchHref = localizedHomeAnchor(language, "#research");
+  const researchHref = localizedPath("research", language);
 
   return (
     <article id="top" className="subpage research-detail-page">
@@ -1301,7 +1328,7 @@ function BlogPage({
   language: Language;
 }) {
   return (
-    <div id="top" className="subpage narrow-page">
+    <div id="top" className="subpage">
       <Breadcrumbs content={content} language={language} current={content.blog.title} />
       <PageHeader title={content.blog.title} />
       <div className="empty-state">
@@ -1383,7 +1410,7 @@ function AcademicIndexPage({
   language: Language;
 }) {
   return (
-    <div id="top" className="subpage narrow-page academic-index">
+    <div id="top" className="subpage academic-index">
       <Breadcrumbs
         content={content}
         language={language}

@@ -87,4 +87,18 @@
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/research/linear-readability-writability/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/research/linear-readability-writability/" />
   </url>
+  <url>
+    <loc>https://yhyfhgs.github.io/research/</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/research/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/research/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/research/" />
+  </url>
+  <url>
+    <loc>https://yhyfhgs.github.io/zh/research/</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yhyfhgs.github.io/research/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://yhyfhgs.github.io/zh/research/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yhyfhgs.github.io/research/" />
+  </url>
 </urlset>
