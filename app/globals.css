@@ -88,7 +88,6 @@ button {
   width: min(100% - 3rem, 70rem);
   min-height: 4.5rem;
   margin-inline: auto;
-  border-bottom: 1px solid var(--line);
   background: var(--header);
 }
 
@@ -189,7 +188,7 @@ main,
 
 .hero {
   display: grid;
-  grid-template-columns: 9.5rem minmax(0, 1fr);
+  grid-template-columns: 11rem minmax(0, 1fr);
   gap: 2.25rem;
   align-items: start;
   max-width: 54rem;
@@ -203,8 +202,9 @@ main,
 
 .hero-avatar {
   display: block;
-  width: 9.5rem;
-  height: 9.5rem;
+  align-self: center;
+  width: 11rem;
+  height: 11rem;
   border-radius: 50%;
   object-fit: cover;
   object-position: 78% 50%;
@@ -294,12 +294,15 @@ main,
 
 .home-section {
   display: grid;
-  grid-template-columns: 9.5rem minmax(0, 1fr);
+  grid-template-columns: 11rem minmax(0, 1fr);
   gap: 2.25rem;
   max-width: 54rem;
   margin-inline: auto;
-  padding-block: clamp(3.5rem, 8vw, 5.25rem);
-  border-top: 1px solid var(--line);
+  padding-block: clamp(2.75rem, 6vw, 3.75rem);
+}
+
+.hero + .home-section {
+  padding-top: 1rem;
 }
 
 .section-label {
@@ -320,9 +323,7 @@ main,
 }
 
 .research-item + .research-item {
-  margin-top: 2.75rem;
-  padding-top: 2.75rem;
-  border-top: 1px solid var(--line);
+  margin-top: 3.5rem;
 }
 
 .research-details {
@@ -452,13 +453,11 @@ main,
 }
 
 .compact-list article {
-  padding-block: 1.45rem;
-  border-top: 1px solid var(--line);
+  padding-block: 1.25rem;
 }
 
 .compact-list article:first-child {
   padding-top: 0;
-  border-top: 0;
 }
 
 .compact-list article:last-child {
@@ -516,8 +515,7 @@ main,
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem;
   align-items: baseline;
-  padding-block: 1.25rem;
-  border-block: 1px solid var(--line);
+  padding-block: 0.75rem;
 }
 
 .preview-row span {
@@ -532,10 +530,6 @@ main,
   font-size: 0.76rem;
   font-style: normal;
   white-space: nowrap;
-}
-
-.preview-row + .preview-row {
-  border-top: 0;
 }
 
 .preview-row:hover span,
@@ -613,8 +607,8 @@ main,
   align-items: baseline;
   justify-content: space-between;
   gap: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--line-strong);
+  flex-wrap: wrap;
+  padding-bottom: 3rem;
 }
 
 .page-header h1 {
@@ -634,8 +628,11 @@ main,
 }
 
 .publication-item {
-  padding-block: 3.75rem;
-  border-bottom: 1px solid var(--line);
+  padding-block: 1.5rem 2rem;
+}
+
+.publication-item + .publication-item {
+  margin-top: 2rem;
 }
 
 .publication-meta {
@@ -710,7 +707,7 @@ main,
 .research-figure-image {
   display: block;
   padding: clamp(0.4rem, 1.5vw, 1rem);
-  border: 1px solid var(--line-strong);
+  border-radius: 0.35rem;
   background: #ffffff;
   cursor: zoom-in;
 }
@@ -756,8 +753,7 @@ main,
 }
 
 .publication-detail-header {
-  padding-bottom: 3rem;
-  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 2rem;
 }
 
 .publication-detail-header h1 {
@@ -767,7 +763,7 @@ main,
   font-size: clamp(2rem, 5vw, 3.7rem);
   font-weight: 400;
   letter-spacing: -0.045em;
-  line-height: 1.08;
+  line-height: 1.15;
 }
 
 .publication-detail-header .authors {
@@ -778,8 +774,7 @@ main,
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
-  padding-block: 1.5rem;
-  border-bottom: 1px solid var(--line);
+  padding-block: 0.5rem 1.5rem;
 }
 
 .publication-facts div {
@@ -807,8 +802,8 @@ main,
   display: grid;
   grid-template-columns: 9rem minmax(0, 1fr);
   gap: 2rem;
-  padding-block: 3.2rem;
-  border-bottom: 1px solid var(--line);
+  padding-block: 2rem;
+  line-height: 1.75;
 }
 
 .publication-detail-section h2 {
@@ -867,8 +862,7 @@ main,
 }
 
 .empty-state {
-  padding-block: 4rem;
-  border-bottom: 1px solid var(--line);
+  padding-block: 1.5rem 4rem;
 }
 
 .empty-state p {
@@ -886,7 +880,7 @@ main,
 }
 
 .friend-links-group {
-  margin-top: 2.5rem;
+  margin-top: 3.5rem;
 }
 
 .friend-links-group-header h2 {
@@ -966,7 +960,8 @@ main,
 .academic-module {
   display: grid;
   grid-template-columns: 9rem minmax(0, 1fr);
-  border-bottom: 1px solid var(--line);
+  column-gap: 2rem;
+  padding-block: 0.5rem;
 }
 
 .academic-module h2 {
@@ -1004,7 +999,6 @@ main,
   justify-content: space-between;
   gap: 2rem;
   padding: 2rem 0 3rem;
-  border-top: 1px solid var(--line);
   color: var(--ink-soft);
   font-size: 0.72rem;
 }
@@ -1078,6 +1072,11 @@ summary:focus-visible {
     margin-left: 0;
   }
 
+  .hero-avatar {
+    width: 10rem;
+    height: 10rem;
+  }
+
   .hero h1 {
     font-size: clamp(2.55rem, 12vw, 3.6rem);
   }
@@ -1100,12 +1099,16 @@ summary:focus-visible {
   }
 
   .research-item + .research-item {
-    margin-top: 2rem;
-    padding-top: 2rem;
+    margin-top: 3rem;
   }
 
   .subpage {
     padding-top: 4.5rem;
+  }
+
+  .page-header {
+    gap: 1rem;
+    padding-bottom: 2rem;
   }
 
   .publication-meta {
