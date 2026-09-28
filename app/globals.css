@@ -188,7 +188,10 @@ main,
 }
 
 .hero {
-  display: block;
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 2.25rem;
+  align-items: start;
   max-width: 54rem;
   margin-inline: auto;
   padding-block: clamp(5.5rem, 11vw, 8rem);
@@ -196,7 +199,15 @@ main,
 
 .hero-copy {
   max-width: 42rem;
-  margin-left: 11.75rem;
+}
+
+.hero-avatar {
+  display: block;
+  width: 9.5rem;
+  height: 9.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 78% 50%;
 }
 
 .kicker {
@@ -1058,6 +1069,8 @@ summary:focus-visible {
   }
 
   .hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
     padding-block: 4.5rem;
   }
 

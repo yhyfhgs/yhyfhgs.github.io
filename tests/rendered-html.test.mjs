@@ -101,7 +101,7 @@ test("server-renders the restrained homepage with only source-backed profile con
   assert.match(html, /<title>Haoyang Ye \(叶昊洋\) · Academic Profile<\/title>/i);
   assert.match(html, /Research Interests: Reinforcement Learning, LLM post training and Agentic RL/);
   assert.doesNotMatch(html, /<p[^>]*class="hero-role"/);
-  assert.doesNotMatch(html, /<img(?=[^>]*src="\/haoyang-ye\.jpg")[^>]*>/);
+  assert.match(html, /<img(?=[^>]*src="\/haoyang-ye\.jpg")(?=[^>]*alt="Portrait of Haoyang Ye")[^>]*>/);
   assert.match(html, /Optimal Stopping SFT for RL Post-Training/);
   assert.match(html, /Economic Science · 47\(5\) · 2025/);
   assert.match(html, /AGI 2025 · LNCS 16058/);
@@ -231,6 +231,7 @@ test("publishes consistent canonical, hreflang, social, and profile metadata", a
 
 test("serves independently crawlable Chinese routes with reciprocal language links", async () => {
   const home = await renderHtml("/zh");
+  assert.match(home, /<img(?=[^>]*src="\/haoyang-ye\.jpg")(?=[^>]*alt="叶昊洋的照片")[^>]*>/);
   assert.match(home, /<title>叶昊洋（Haoyang Ye）· 学术主页<\/title>/);
   assert.match(home, /lang="zh-CN"/);
   assert.match(home, /研究方向：Reinforcement Learning, LLM post training and Agentic RL/);
@@ -557,8 +558,8 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
   await assert.rejects(access(new URL("../public/haoyang-ye-cv-en.pdf", import.meta.url)));
   await assert.rejects(access(new URL("../public/haoyang-ye-cv-zh.pdf", import.meta.url)));
   await assert.rejects(access(new URL("../public/cv.pdf", import.meta.url)));
-  await assert.rejects(access(new URL("../public/haoyang-ye.jpg", import.meta.url)));
+  await access(new URL("../public/haoyang-ye.jpg", import.meta.url));
   await assert.rejects(access(new URL("../public/haoyang-ye-icon.jpg", import.meta.url)));
-  await assert.rejects(access(new URL("../dist/client/haoyang-ye.jpg", import.meta.url)));
+  await access(new URL("../dist/client/haoyang-ye.jpg", import.meta.url));
   await assert.rejects(access(new URL("../dist/client/haoyang-ye-icon.jpg", import.meta.url)));
 });

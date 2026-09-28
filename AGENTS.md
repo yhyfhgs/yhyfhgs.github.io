@@ -4,7 +4,7 @@
 
 ## Content and publication constraints
 
-- Profile claims and publication metadata require supplied or verified sources. Keep the established public-content scope: exclude internship sections, portraits, private CVs, grades/test scores/GPA and inferred biographical details. Keep CV download disabled until a public file is supplied.
+- Profile claims and publication metadata require supplied or verified sources. Keep the established public-content scope: the owner-supplied homepage portrait is approved; exclude internship sections, private CVs, grades/test scores/GPA and inferred biographical details. Keep CV download disabled until a public file is supplied.
 - Maintain separate crawlable English/Chinese routes, self-canonicals, reciprocal hreflang, existing scholarly structured data and Highwire citation metadata. Sitemaps include substantive canonical pages; preserve noindex for empty/thin sections until content justifies changing it.
 - Keep Search Console verification tokens uncommitted until the public property is verified by its owner. Keep private contact and source material outside tracked files. Preserve the light/dark controls and existing page/metadata conventions.
 - GitHub Pages deploys through `.github/workflows/pages.yml` after changes reach main. Treat a successful push/build separately from verified live publication.

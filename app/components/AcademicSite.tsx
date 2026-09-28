@@ -831,6 +831,16 @@ function HomePage({
   return (
     <div id="top" className="home-page">
       <section className="hero">
+        {/* Static photo served directly by GitHub Pages. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="hero-avatar"
+          src="/haoyang-ye.jpg"
+          alt={language === "zh" ? "叶昊洋的照片" : "Portrait of Haoyang Ye"}
+          width="1440"
+          height="960"
+          fetchPriority="high"
+        />
         <div className="hero-copy">
           <p className="kicker">{content.hero.overline}</p>
           <h1>{content.hero.name}</h1>
