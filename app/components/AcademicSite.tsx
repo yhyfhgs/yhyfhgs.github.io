@@ -26,6 +26,7 @@ const GITHUB_URL = "https://github.com/yhyfhgs";
 const ORCID_URL = "https://orcid.org/0009-0009-3215-2811";
 const X_URL = "https://x.com/FHGSYHY";
 const YUECHEN_AVATAR = "/friends/yuechen-zhu-avatar.jpg";
+const YUJIE_AVATAR = "/friends/yujie-sun-avatar.jpg";
 
 const pageRoutes: Record<PageKey, string> = {
   home: "/",
@@ -306,6 +307,7 @@ const copy = {
           name: "Yujie Sun (孙瑜杰)",
           description: "3D vision, avatars, large language models, and mobile agents.",
           href: "https://unikeen.github.io/",
+          avatar: YUJIE_AVATAR,
         },
       ],
       hackthon: {
@@ -596,6 +598,7 @@ const copy = {
           name: "孙瑜杰（Yujie Sun）",
           description: "三维视觉、数字人、大语言模型与移动智能体。",
           href: "https://unikeen.github.io/",
+          avatar: YUJIE_AVATAR,
         },
       ],
       hackthon: {

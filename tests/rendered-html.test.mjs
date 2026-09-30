@@ -406,6 +406,7 @@ test("server-renders dedicated blog, friend-links, and reserved academic index p
   assert.match(linksMain, /Yujie Sun \(孙瑜杰\)/);
   assert.match(linksMain, /class="friend-link-avatar"/);
   assert.match(linksMain, /src="\/friends\/yuechen-zhu-avatar\.jpg"/);
+  assert.match(linksMain, /src="\/friends\/yujie-sun-avatar\.jpg"/);
   assert.match(linksMain, /class="friend-link-card"/);
   assert.doesNotMatch(linksMain, /friend-link-action|>Visit ↗</);
   assert.doesNotMatch(linksMain, /friend-link-domain/);
@@ -495,9 +496,11 @@ test("ships static GitHub Pages output, discovery files, and no private CV copie
     access(new URL("../public/icon.svg", import.meta.url)),
     access(new URL("../public/og.png", import.meta.url)),
     access(new URL("../public/friends/yuechen-zhu-avatar.jpg", import.meta.url)),
+    access(new URL("../public/friends/yujie-sun-avatar.jpg", import.meta.url)),
     access(new URL("../dist/client/index.html", import.meta.url)),
     access(new URL("../dist/client/links/index.html", import.meta.url)),
     access(new URL("../dist/client/friends/yuechen-zhu-avatar.jpg", import.meta.url)),
+    access(new URL("../dist/client/friends/yujie-sun-avatar.jpg", import.meta.url)),
     access(new URL("../dist/client/publications/index.html", import.meta.url)),
     access(new URL("../dist/client/academic/index.html", import.meta.url)),
     access(new URL("../dist/client/zh/index.html", import.meta.url)),
