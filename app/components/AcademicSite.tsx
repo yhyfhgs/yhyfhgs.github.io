@@ -302,6 +302,11 @@ const copy = {
           href: "https://zzzyc001.github.io/",
           avatar: YUECHEN_AVATAR,
         },
+        {
+          name: "Yujie Sun (孙瑜杰)",
+          description: "3D vision, avatars, large language models, and mobile agents.",
+          href: "https://unikeen.github.io/",
+        },
       ],
       hackthon: {
         title: "Hackthon",
@@ -586,6 +591,11 @@ const copy = {
           description: "A group is a groupoid with a single object.",
           href: "https://zzzyc001.github.io/",
           avatar: YUECHEN_AVATAR,
+        },
+        {
+          name: "孙瑜杰（Yujie Sun）",
+          description: "三维视觉、数字人、大语言模型与移动智能体。",
+          href: "https://unikeen.github.io/",
         },
       ],
       hackthon: {

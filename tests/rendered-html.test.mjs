@@ -402,6 +402,8 @@ test("server-renders dedicated blog, friend-links, and reserved academic index p
   assert.match(linksMain, /class="friend-link" href="https:\/\/zzzyc001\.github\.io\/"/);
   assert.match(linksMain, /Yuechen Zhu/);
   assert.match(linksMain, /A group is a groupoid with a single object\./);
+  assert.match(linksMain, /class="friend-link" href="https:\/\/unikeen\.github\.io\/"/);
+  assert.match(linksMain, /Yujie Sun \(孙瑜杰\)/);
   assert.match(linksMain, /class="friend-link-avatar"/);
   assert.match(linksMain, /src="\/friends\/yuechen-zhu-avatar\.jpg"/);
   assert.match(linksMain, /class="friend-link-card"/);
