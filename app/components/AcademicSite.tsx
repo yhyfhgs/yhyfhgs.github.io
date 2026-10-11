@@ -317,7 +317,7 @@ const copy = {
           {
             name: "ailiheizi (刘志)",
             description: "Agent engineering and full-stack development.",
-            href: "https://me.alhz.org/",
+            href: "https://alhz.org/",
           },
         ],
       },
@@ -608,7 +608,7 @@ const copy = {
           {
             name: "刘志（ailiheizi）",
             description: "Agent 工程与全栈开发。",
-            href: "https://me.alhz.org/",
+            href: "https://alhz.org/",
           },
         ],
       },
